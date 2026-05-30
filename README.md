@@ -2,15 +2,13 @@
 
 **DAO de sellers de marketplace construída na Solana para negociação coletiva de frete, mídia e influencers.**
 
-> Projeto submetido ao Hackathon Solana Brasil 2026 — Trilha: Payments, RWAs & Tokenização
-
 ---
 
 ## O Problema
 
 Sellers de marketplace (Mercado Livre, Shopee etc.) operam isolados e perdem poder de barganha:
 
-- **Frete:** pagam R$ 28/pacote no balcão enquanto grandes pagam R$ 16–18
+- **Frete:** pagam R\$ 28/pacote no balcão enquanto grandes pagam R$ 16–18
 - **Mídia:** disputam CPM alto com empresas com budget 100x maior  
 - **Influencer:** sem volume para negociar cachê
 - **Dados:** sem benchmark de mercado para tomar decisões
@@ -173,25 +171,6 @@ Para a apresentação, o projeto inclui:
 npm run demo:setup   # popula wallets e cria proposta inicial
 npm run demo:vote    # simula votos dos membros
 ```
-
----
-
-## Integração Chainlink CRE (opcional)
-
-Workflow CRE para validação off-chain de volume de vendas:
-
-```
-[API Marketplace] → CRE Workflow → [Programa Solana]
-     ↓
- Valida volume dos últimos 30 dias antes do mint de governance tokens
-```
-
-Referências:
-- [Documentação CRE](https://docs.chain.link/cre)
-- [Bootcamp PT-BR](https://smartcontractkit.github.io/cre-bootcamp-2026/pt)
-- [Templates CRE](https://github.com/smartcontractkit/cre-templates/)
-
----
 
 ## Roadmap Pós-Hackathon
 

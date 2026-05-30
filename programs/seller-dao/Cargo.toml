@@ -1,0 +1,19 @@
+[package]
+name = "seller_dao"
+version = "0.1.0"
+description = "A DAO for marketplace sellers to collectively negotiate shipping, media, and influencers on Solana"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "seller_dao"
+
+[features]
+no-entrypoint = []
+
+[dependencies]
+anchor-lang = "0.29.0"
+anchor-spl = "0.29.0"
+
+[dev-dependencies]
+anchor-client = "0.29.0"

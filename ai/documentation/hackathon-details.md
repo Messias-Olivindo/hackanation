@@ -23,7 +23,6 @@ Centralized info about the hackathon this repo participates in.
 | Mar 2026 | Community warm-up, Twitter Spaces |
 | Apr 24, 2026 | Bootcamp at Inteli — hackathon kickoff |
 | May 14, 2026 | Solana bootcamp at FIAP Paulista — "O que você precisa para criar um bom projeto em Solana" |
-| May 25, 2026 | Online workshop "Acelerando o seu projeto com Chainlink CRE" (Solange Gueiros) |
 | May 31, 2026 23:00 | Initial submission deadline |
 | Jun 1–2, 2026 | Final submissions, pitches, awards — Pavilhão da Bienal, São Paulo (TokenNation 2026 main event) |
 
@@ -38,10 +37,6 @@ Three categories:
 3. **Infrastructure & Dev Tools** — SDKs, APIs, debugging tools, Solana dev tooling.
 
 Sponsor: Superteam Brasil (official Solana builder community in Brazil) + Tether.
-
-### 2. Chainlink Ecosystem
-
-Projects using **Chainlink CRE** (Chainlink Runtime Environment) workflows.
 
 ## Prizes
 
