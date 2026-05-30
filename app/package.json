@@ -1,0 +1,26 @@
+{
+  "name": "seller-dao-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "demo:setup": "ts-node scripts/demo-setup.ts",
+    "demo:vote": "ts-node scripts/demo-vote.ts"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.83.0",
+    "next": "14.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.7",
+    "typescript": "5.3.3",
+    "ts-node": "10.9.2"
+  }
+}

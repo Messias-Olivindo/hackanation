@@ -1,0 +1,16 @@
+[program]
+name = "seller_dao"
+features = ["no-entrypoint"]
+
+[programs.localnet]
+seller_dao = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "yarn test"
