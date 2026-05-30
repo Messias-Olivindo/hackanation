@@ -1,28 +1,29 @@
 # SellerDAO 🛒⚡
 
-**DAO de sellers de marketplace construída na Solana para negociação coletiva de frete, mídia e influencers.**
+**DAO de sellers de marketplace construída na Solana para compra coletiva de estoque, creator pools e mídia em bloco.**
 
 ---
 
 ## O Problema
 
-Sellers de marketplace (Mercado Livre, Shopee etc.) operam isolados e perdem poder de barganha:
+Sellers de marketplace (Mercado Livre, Shopee etc.) operam isolados e perdem poder de barganha
+nos espacos onde o marketplace nao interfere:
 
-- **Frete:** pagam R\$ 28/pacote no balcão enquanto grandes pagam R$ 16–18
-- **Mídia:** disputam CPM alto com empresas com budget 100x maior  
-- **Influencer:** sem volume para negociar cachê
-- **Dados:** sem benchmark de mercado para tomar decisões
+- **Estoque:** compram pequeno e pagam mais caro no atacado
+- **Creator pool:** nao conseguem dividir receita de live coletiva
+- **Midia:** disputam CPM alto com empresas com budget 100x maior
+- **Dados:** sem benchmark de mercado para tomar decisoes
 
 ## A Solução
 
-Uma DAO on-chain na Solana que agrupa sellers para negociar coletivamente:
+Uma DAO on-chain na Solana que agrupa sellers para agir onde o marketplace nao bloqueia:
 
 ```
 Seller entra → deposita stake (10 USDC) → recebe governance tokens
      ↓
  1–2% de cada venda → treasury compartilhado (PDA controlado pelo programa)
      ↓
- Membro propõe uso (frete, mídia, influencer) → votação 72h on-chain
+ Membro propoe uso (estoque, creator pool, midia) → votacao 72h on-chain
      ↓
  Aprovado → treasury paga fornecedor → benefício distribuído por volume de vendas
 ```
@@ -35,7 +36,7 @@ Seller entra → deposita stake (10 USDC) → recebe governance tokens
 
 | Métrica | Resultado |
 |---|---|
-| Economia de frete | R$ 12/pacote |
+| Desconto medio em estoque | 8-15% |
 | Redução de CPM | 40% |
 | Treasury mensal estimado | R$ 8.000 |
 | Intermediários humanos | 0 |
@@ -164,7 +165,7 @@ Para a apresentação, o projeto inclui:
 
 - **5 sellers simulados** com wallets de teste pré-carregadas na Devnet
 - **Treasury inicial** visível no Solana Explorer
-- **Proposta ativa** de contrato de frete pronta para votação ao vivo
+- **Proposta ativa** de compra coletiva de estoque pronta para votacao ao vivo
 - Script de setup: `scripts/demo-setup.ts`
 
 ```bash
@@ -175,10 +176,10 @@ npm run demo:vote    # simula votos dos membros
 ## Roadmap Pós-Hackathon
 
 - [ ] Integração real com APIs de marketplaces (ML, Shopee)
-- [ ] Onboarding simplificado sem wallet (custodial para novos usuários)
-- [ ] Módulo de benchmark de dados de vendas
-- [ ] Parcerias com transportadoras para negociação real
-- [ ] Mobile app para votação
+- [ ] Onboarding simplificado sem wallet (custodial para novos usuarios)
+- [ ] Modulo de benchmark de dados de vendas
+- [ ] Parcerias com distribuidores para compra coletiva de estoque
+- [ ] Mobile app para votacao
 
 ---
 

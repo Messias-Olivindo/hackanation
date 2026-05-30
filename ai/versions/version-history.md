@@ -4,7 +4,7 @@
 
 - Complete Anchor program with 4 instructions
 - Full React frontend with all components
-- Demo scripts for hackathon presentation
+- Demo scripts focused on collective inventory purchase
 - Documentation structure established
 - Git repository initialized
 
@@ -24,7 +24,7 @@
 ## v1.3.0 - Planned (June 25, 2026)
 
 - Mobile app version
-- Partner transport carrier integrations
+- Partner distributor integrations for inventory pooling
 - Advanced analytics dashboard
 - Final documentation and presentation materials
 

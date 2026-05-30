@@ -8,7 +8,7 @@
 | Hackathon | Hackanation 2026 |
 | Track | Payments, RWAs & Tokenization |
 | Target | Marketplace sellers |
-| Core Value | Collective bargaining power |
+| Core Value | Collective bargaining power outside marketplace control |
 
 ## Functional Requirements
 
@@ -25,14 +25,14 @@
 
 3. **Proposal System**
    - Any member can propose treasury usage
-   - Proposal types: shipping contracts, media buys, influencer deals
+   - Proposal types: collective inventory buys, creator pool revenue splits, media buys
    - 72-hour voting window
    - Majority vote required for approval
 
 4. **Execution System**
    - Approved proposals execute automatically
    - Funds transferred directly to recipient
-   - Benefits distributed proportional to sales volume
+   - Benefits distributed proportional to sales volume or proposal rules
 
 ### Technical Requirements
 - On-chain: Anchor (Rust) program with 4 instructions
