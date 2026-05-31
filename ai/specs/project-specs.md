@@ -16,11 +16,11 @@
 
 1. **DAO Membership**
    - Stake 10 USDC to join
-   - Receive governance tokens proportional to sales volume
-   - Maximum concentration limit implemented
+   - Governance weight proporcional ao stake (registrado no estado do membro)
+   - Limite de concentracao ainda nao implementado
 
 2. **Treasury Management**
-   - 1-2% of each sale automatically contributes to treasury
+   - Contribuicao automatica por venda e planejada (nao implementada no MVP)
    - Treasury controlled by PDA
    - Transparent on Solana Explorer
 
@@ -31,9 +31,9 @@
    - Majority vote required for approval
 
 4. **Execution System**
-   - Approved proposals execute automatically
+   - Propostas aprovadas podem ser executadas apos a janela de voto
    - Funds transferred directly to recipient
-   - Benefits distributed proportional to sales volume or proposal rules
+   - Distribuicao de beneficios e planejada (nao implementada no MVP)
 
 ### Technical Requirements
 
@@ -44,6 +44,7 @@
 - Wallet: Phantom integration
 - Storage: PDAs for all state data
 - Tokens: SPL Token for governance
+- Governance weight stored on-chain (no mint in MVP)
 - On-ramp: provider to validate; no assumption of PIX -> USDC on Solana in MVP
 - Tailwind setup: tailwindcss + postcss + autoprefixer with config files
 

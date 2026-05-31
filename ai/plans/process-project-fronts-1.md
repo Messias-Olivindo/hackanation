@@ -2,15 +2,15 @@
 goal: Development plan for SellerDAO project fronts
 version: 1.0
 date_created: 2026-05-30
-last_updated: 2026-05-30
+last_updated: 2026-05-31
 owner: SellerDAO Team
-status: 'Planned'
+status: 'Completed'
 tags: [process, architecture, feature]
 ---
 
 # Introduction
 
-![Status: Planned](https://img.shields.io/badge/status-Planned-blue)
+![Status: Completed](https://img.shields.io/badge/status-Completed-green)
 
 This plan defines the development workflow for the on-chain program, frontend app, demo scripts, and documentation to deliver the SellerDAO hackathon submission.
 
@@ -36,13 +36,13 @@ This plan defines the development workflow for the on-chain program, frontend ap
 
 | Task | Description | Completed | Date |
 |------|-------------|-----------|------|
-| TASK-001 | Define PDA seeds and account structs in programs/seller-dao/src/state/dao.rs, programs/seller-dao/src/state/member.rs, programs/seller-dao/src/state/proposal.rs (include sizes and constraints). | | |
-| TASK-002 | Implement `join_dao` in programs/seller-dao/src/instructions/join_dao.rs with treasury PDA, member init, and SPL token transfer via token program and ATAs. | | |
-| TASK-003 | Implement `propose` in programs/seller-dao/src/instructions/propose.rs with signer validation, proposal init, and timestamps. | | |
-| TASK-004 | Implement `vote` in programs/seller-dao/src/instructions/vote.rs with signer validation, vote window check, and one-vote-per-member tracking (new VoteRecord PDA). | | |
-| TASK-005 | Implement `execute` in programs/seller-dao/src/instructions/execute.rs with majority check and treasury transfer to recipient ATA. | | |
-| TASK-006 | Wire instruction modules and error types in programs/seller-dao/src/lib.rs. | | |
-| TASK-007 | Review each instruction against the Solana security checklist (signer checks, account constraints, PDA ownership) and document any required fixes. | | |
+| TASK-001 | Define PDA seeds and account structs in programs/seller-dao/src/state/dao.rs, programs/seller-dao/src/state/member.rs, programs/seller-dao/src/state/proposal.rs (include sizes and constraints). | ✅ | 2026-05-31 |
+| TASK-002 | Implement `join_dao` in programs/seller-dao/src/instructions/join_dao.rs with treasury PDA, member init, and SPL token transfer via token program and ATAs. | ✅ | 2026-05-31 |
+| TASK-003 | Implement `propose` in programs/seller-dao/src/instructions/propose.rs with signer validation, proposal init, and timestamps. | ✅ | 2026-05-31 |
+| TASK-004 | Implement `vote` in programs/seller-dao/src/instructions/vote.rs with signer validation, vote window check, and one-vote-per-member tracking (new VoteRecord PDA). | ✅ | 2026-05-31 |
+| TASK-005 | Implement `execute` in programs/seller-dao/src/instructions/execute.rs with majority check and treasury transfer to recipient ATA. | ✅ | 2026-05-31 |
+| TASK-006 | Wire instruction modules and error types in programs/seller-dao/src/lib.rs. | ✅ | 2026-05-31 |
+| TASK-007 | Review each instruction against the Solana security checklist (signer checks, account constraints, PDA ownership) and document any required fixes. | ✅ | 2026-05-31 |
 
 ### Implementation Phase 2
 
@@ -50,11 +50,11 @@ This plan defines the development workflow for the on-chain program, frontend ap
 
 | Task | Description | Completed | Date |
 |------|-------------|-----------|------|
-| TASK-008 | Update app/pages/index.tsx to render Treasury, ProposalList, VotePanel, and History components with layout container. | | |
-| TASK-009 | Replace mock data in app/src/hooks/useDAO.ts with real on-chain reads using program IDs and PDAs. | | |
-| TASK-010 | Improve wallet UX in app/src/hooks/useWallet.ts and add connect/disconnect states in VotePanel. | | |
-| TASK-011 | Align treasury balance display in app/src/components/Treasury.tsx with real token account balance. | | |
-| TASK-012 | Add error/loading states in app/src/components/ProposalList.tsx and app/src/components/History.tsx for empty data. | | |
+| TASK-008 | Update app/pages/index.tsx to render Treasury, ProposalList, VotePanel, and History components with layout container. | ✅ | 2026-05-31 |
+| TASK-009 | Replace mock data in app/src/hooks/useDAO.ts with real on-chain reads using program IDs and PDAs. | ✅ | 2026-05-31 |
+| TASK-010 | Improve wallet UX in app/src/hooks/useWallet.ts and add connect/disconnect states in VotePanel. | ✅ | 2026-05-31 |
+| TASK-011 | Align treasury balance display in app/src/components/Treasury.tsx with real token account balance. | ✅ | 2026-05-31 |
+| TASK-012 | Add error/loading states in app/src/components/ProposalList.tsx and app/src/components/History.tsx for empty data. | ✅ | 2026-05-31 |
 
 ### Implementation Phase 3
 
@@ -62,10 +62,10 @@ This plan defines the development workflow for the on-chain program, frontend ap
 
 | Task | Description | Completed | Date |
 |------|-------------|-----------|------|
-| TASK-013 | Update app/scripts/demo-setup.ts to create members via `join_dao` and create an initial proposal using real instructions. | | |
-| TASK-014 | Update app/scripts/demo-vote.ts to cast votes via `vote` and optionally call `execute`. | | |
-| TASK-015 | Add required dependencies in app/package.json (e.g., @project-serum/anchor, @solana/spl-token) and keep versions pinned. | | |
-| TASK-016 | Document demo commands in README.md and ai/documentation/project-context.md. | | |
+| TASK-013 | Update app/scripts/demo-setup.ts to create members via `join_dao` and create an initial proposal using real instructions. | ✅ | 2026-05-31 |
+| TASK-014 | Update app/scripts/demo-vote.ts to cast votes via `vote` and optionally call `execute`. | ✅ | 2026-05-31 |
+| TASK-015 | Add required dependencies in app/package.json (e.g., @project-serum/anchor, @solana/spl-token) and keep versions pinned. | ✅ | 2026-05-31 |
+| TASK-016 | Document demo commands in README.md and ai/documentation/project-context.md. | ✅ | 2026-05-31 |
 
 ### Implementation Phase 4
 
@@ -73,9 +73,9 @@ This plan defines the development workflow for the on-chain program, frontend ap
 
 | Task | Description | Completed | Date |
 |------|-------------|-----------|------|
-| TASK-017 | Update ai/specs/project-specs.md to reflect final on-chain and frontend behavior. | | |
-| TASK-018 | Update ai/versions/version-history.md with the actual release notes for v1.0.0. | | |
-| TASK-019 | Verify README.md includes setup, deploy, and demo steps with Devnet instructions. | | |
+| TASK-017 | Update ai/specs/project-specs.md to reflect final on-chain and frontend behavior. | ✅ | 2026-05-31 |
+| TASK-018 | Update ai/versions/version-history.md with the actual release notes for v1.0.0. | ✅ | 2026-05-31 |
+| TASK-019 | Verify README.md includes setup, deploy, and demo steps with Devnet instructions. | ✅ | 2026-05-31 |
 
 ## 3. Alternatives
 

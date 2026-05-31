@@ -42,6 +42,7 @@ describe("seller-dao mvp", () => {
   let daoPda;
   let treasuryAuthority;
   let memberPda;
+  let altRecipientTokenAccount;
 
   before(async () => {
     const signature = await provider.connection.requestAirdrop(
@@ -132,6 +133,14 @@ describe("seller-dao mvp", () => {
     );
     recipientTokenAccount = recipientAta.address;
 
+    const altRecipientAta = await getOrCreateAssociatedTokenAccount(
+      provider.connection,
+      user,
+      mint,
+      Keypair.generate().publicKey
+    );
+    altRecipientTokenAccount = altRecipientAta.address;
+
     await program.methods
       .propose("Buy inventory", new anchor.BN(50_000), recipientTokenAccount)
       .accounts({
@@ -214,6 +223,91 @@ describe("seller-dao mvp", () => {
         })
         .rpc();
       assert.fail("Expected double vote to fail");
+    } catch (err) {
+      assert.ok(err);
+    }
+  });
+
+  it("rejects zero target proposals", async () => {
+    const daoAccount = await program.account.dao.fetch(daoPda);
+    const proposalId = daoAccount.proposalCount;
+    const proposalSeed = Buffer.from(proposalId.toArray("le", 8));
+
+    const [proposalPda] = PublicKey.findProgramAddressSync(
+      [PROPOSAL_SEED, daoPda.toBuffer(), proposalSeed],
+      program.programId
+    );
+
+    try {
+      await program.methods
+        .propose("Zero target", new anchor.BN(0), recipientTokenAccount)
+        .accounts({
+          member: memberPda,
+          dao: daoPda,
+          proposal: proposalPda,
+          user: user.publicKey,
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc();
+      assert.fail("Expected zero target proposal to fail");
+    } catch (err) {
+      assert.ok(err);
+    }
+  });
+
+  it("rejects execution with wrong recipient token account", async () => {
+    const daoAccount = await program.account.dao.fetch(daoPda);
+    const proposalId = daoAccount.proposalCount;
+    const proposalSeed = Buffer.from(proposalId.toArray("le", 8));
+
+    const [proposalPda] = PublicKey.findProgramAddressSync(
+      [PROPOSAL_SEED, daoPda.toBuffer(), proposalSeed],
+      program.programId
+    );
+
+    await program.methods
+      .propose("Wrong recipient", new anchor.BN(1_000), recipientTokenAccount)
+      .accounts({
+        member: memberPda,
+        dao: daoPda,
+        proposal: proposalPda,
+        user: user.publicKey,
+        systemProgram: SystemProgram.programId,
+      })
+      .rpc();
+
+    const [voteRecordPda] = PublicKey.findProgramAddressSync(
+      [VOTE_SEED, proposalPda.toBuffer(), memberPda.toBuffer()],
+      program.programId
+    );
+
+    await program.methods
+      .vote(proposalId, true)
+      .accounts({
+        member: memberPda,
+        proposal: proposalPda,
+        dao: daoPda,
+        voteRecord: voteRecordPda,
+        user: user.publicKey,
+        systemProgram: SystemProgram.programId,
+      })
+      .rpc();
+
+    await new Promise((resolve) => setTimeout(resolve, 6000));
+
+    try {
+      await program.methods
+        .execute(proposalId)
+        .accounts({
+          proposal: proposalPda,
+          dao: daoPda,
+          treasuryAuthority,
+          treasuryTokenAccount,
+          recipientTokenAccount: altRecipientTokenAccount,
+          tokenProgram: TOKEN_PROGRAM_ID,
+        })
+        .rpc();
+      assert.fail("Expected execute with wrong recipient to fail");
     } catch (err) {
       assert.ok(err);
     }

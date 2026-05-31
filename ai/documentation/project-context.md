@@ -75,14 +75,14 @@ Uma DAO (Organização Autônoma Descentralizada) **na Solana** que agrupa selle
 ### Passo 1 — Entrada na DAO
 
 - Seller deposita stake mínimo (**10 USDC**) em programa Anchor na Solana
-- Recebe **tokens de governança** proporcionais ao volume de vendas dos últimos 30 dias
-- Teto de concentração para evitar dominância de um único seller
-- Parte do stake vai para o treasury coletivo, parte para os criadores como taxa de onboarding
+- Peso de governança proporcional ao stake (registrado on-chain no estado do membro)
+- Teto de concentração ainda não implementado no MVP
+- Stake vai para o treasury coletivo
 
 ### Passo 2 — Alimentação do Treasury
 
-- A cada venda processada, **1–2% vai automaticamente para o treasury** via smart contract
-- Sem intervenção manual — programa Solana distribui no momento do pagamento
+- Contribuição automática por venda é **planejada** para produção
+- MVP usa contribuição manual/simulada
 - Treasury visível publicamente no Solana Explorer
 
 ### Passo 3 — Proposta e Votação On-Chain
@@ -92,12 +92,11 @@ Uma DAO (Organização Autônoma Descentralizada) **na Solana** que agrupa selle
 - Membros votam com tokens de governança
 - Aprovação: maioria simples (ou supermaioria para gastos grandes)
 
-### Passo 4 — Execução Trustless via Squads Multisig
+### Passo 4 — Execução Trustless (MVP)
 
-- Proposta aprovada: **Squads Protocol** coleta M-de-N assinaturas dos membros
-- Threshold atingido → contrato executa automaticamente, sem nenhuma pessoa com a chave do treasury
+- Proposta aprovada: execução on-chain via PDA do treasury
 - Treasury envia USDC para wallet do fornecedor (custodial ou nativa)
-- Benefício distribuído entre membros **proporcionalmente ao volume de vendas do período**
+- Distribuição automática de benefícios é **planejada** (não implementada no MVP)
 - Todo o fluxo auditável publicamente no Solana Explorer
 
 ---
@@ -112,11 +111,7 @@ Pagar fornecedores do mundo real (Jadlog, atacadistas, creators) exige que algu�
 
 ### 5.2 Squads Protocol (multisig nativo Solana)
 
-- Programa auditado, em produção no ecossistema Solana
-- O treasury pertence a um endereço multisig do Squads — nenhuma pessoa tem a chave privada
-- Pagamento só executa quando M-de-N membros assinam (ex: 5 de 9)
-- Execução automática ao atingir threshold — sem intervenção humana
-- Fluxo: DAO vota na proposta → Squads coleta assinaturas → threshold atingido → USDC vai direto ao fornecedor
+- Planejado para produção, não implementado no MVP
 
 ### 5.3 Abstração custodial para fornecedores sem wallet Solana
 

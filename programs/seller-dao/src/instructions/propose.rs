@@ -50,6 +50,9 @@ pub fn propose(
         DaoError::DescriptionTooLong
     );
 
+    // Validação: proposta precisa solicitar algum valor
+    require!(target_amount > 0, DaoError::ZeroTargetAmount);
+
     // --- Configuração da proposta ---
     let proposal = &mut ctx.accounts.proposal;
     proposal.proposer = ctx.accounts.member.user;

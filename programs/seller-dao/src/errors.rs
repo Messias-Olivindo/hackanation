@@ -38,6 +38,10 @@ pub enum DaoError {
     #[msg("Proposal description too long")]
     DescriptionTooLong,
 
+    /// Proposta com valor alvo igual a zero
+    #[msg("Proposal target amount must be greater than zero")]
+    ZeroTargetAmount,
+
     /// Período de votação da proposta já encerrou (para votar)
     #[msg("Proposal voting period has closed")]
     ProposalClosed,
@@ -65,4 +69,8 @@ pub enum DaoError {
     /// Mint da token account do destinatário não corresponde à do treasury
     #[msg("Treasury token mint mismatch")]
     TreasuryMintMismatch,
+
+    /// Token account do destinatário não corresponde ao recipient da proposta
+    #[msg("Recipient token account does not match proposal recipient")]
+    InvalidRecipientTokenAccount,
 }

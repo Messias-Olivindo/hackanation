@@ -10,13 +10,13 @@ tags: [process, solana, anchor, testing, devnet, mvp]
 
 # Introduction
 
-![Status: Planned](https://img.shields.io/badge/status-Planned-blue)
+![Status: In%20progress](https://img.shields.io/badge/status-In%20progress-yellow)
 
 This plan defines a detailed, research-backed implementation workflow for the SellerDAO MVP Anchor program. The workflow enforces a continuous loop: generate code, compile, run tests, fix errors, and if unresolved, validate against external Solana DAO references and official documentation. Scope is limited to the MVP on-chain instructions: `join_dao`, `propose`, `vote`, `execute`.
 
 ## 1. Requirements & Constraints
 
-- **REQ-001**: Deliver a deterministic build with `anchor build` for the MVP program.
+- **REQ-001**: Build with `anchor build` for the MVP program; spl-token-2022 warning may appear.
 - **REQ-002**: Provide instruction-level tests for `join_dao`, `propose`, `vote`, `execute`.
 - **REQ-003**: Provide a manual test flow and deploy the program to Solana Devnet.
 - **REQ-004**: Keep MVP scope limited to on-chain governance and treasury logic only.
@@ -71,7 +71,7 @@ This plan defines a detailed, research-backed implementation workflow for the Se
 
 | Task | Description | Completed | Date |
 |------|-------------|-----------|------|
-| TASK-015 | Create Anchor tests in [programs/seller-dao/tests/dao_mvp.ts](programs/seller-dao/tests/dao_mvp.ts) for each instruction: `join_dao`, `propose`, `vote`, `execute`. | [x] | 2026-05-31 |
+| TASK-015 | Create Anchor tests in [programs/seller-dao/tests/dao_mvp.js](programs/seller-dao/tests/dao_mvp.js) for each instruction: `join_dao`, `propose`, `vote`, `execute`. | [x] | 2026-05-31 |
 | TASK-016 | Add a negative test suite in the same file covering: non-member propose, vote after window, execute before close, execute twice. | [x] | 2026-05-31 |
 | TASK-017 | Define an iterative loop checklist in [README.md](README.md): build -> test -> fix -> re-test -> if still failing, reference external DAO patterns and docs in [ai/documentation/dao-patterns.md](ai/documentation/dao-patterns.md). | [x] | 2026-05-31 |
 | TASK-018 | Run `anchor build` and `anchor test` locally; if failures occur, fix code and re-run until green. Document fixes in [README.md](README.md). | [x] | 2026-05-31 |
