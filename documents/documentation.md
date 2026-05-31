@@ -39,12 +39,16 @@ Votação on-chain → execução automática
 
 &ensp; O treasury acumula o capital e qualquer membro pode propor um uso, seja uma compra coletiva de estoque, contratação de creator para live no TikTok Shop, campanha de mídia em bloco, empréstimo interno para capital de giro. A proposta fica aberta 72 horas para votação. Aprovada, o smart contract executa sem intermediário.
 
-### 1.2.2. O que a blockchain resolve 
-&ensp; Transparência: qualquer membro vê o saldo do treasury e o histórico completo de movimentações no Solana Explorer, em tempo real, sem depender de relatório de ninguém.
+### 1.2.2. Por que Solana?
+&ensp; A SellerDAO depende de uma infraestrutura onde movimentar recursos, votar propostas e executar decisões coletivas seja tão simples quanto utilizar qualquer software tradicional. Por isso, blockchain é o que viabiliza nosso modelo.
 
-&ensp; Governançao: o peso de cada voto é proporcional ao faturamento validado, ou seja, quem contribui mais tem mais voz, com teto de concentração para evitar que um seller domine o grupo.
+&ensp; A Solana combina três características essenciais para a operação da SellerDAO. A primeira é o custo extremamente baixo das transações, permitindo que contribuições, votações e distribuições ocorram sem criar atrito para os membros da comunidade. A segunda é a velocidade de confirmação, que possibilita uma experiência praticamente instantânea para ações de governança e movimentação de recursos. A terceira é seu ecossistema financeiro já consolidado, com suporte nativo a USDC, ferramentas maduras de governança, multisigs e infraestrutura de pagamentos.
 
-&ensp; Distribuição automática: o benefício de cada ação coletiva volta para os membros proporcionalmente ao volume do período, sem planilha, sem pessoa calculando, sem discussão.
+&ensp; Além da performance da rede, a Solana oferece um ecossistema de desenvolvimento que reduz significativamente a complexidade de implementação. Ferramentas como Anchor, SPL Tokens e Squads permitem construir tesourarias, sistemas de governança e mecanismos de controle financeiro utilizando componentes amplamente testados pelo mercado, acelerando o desenvolvimento e aumentando a segurança da solução.
+
+&ensp; Por fim, a forte presença de stablecoins na Solana torna possível conectar o ambiente on-chain com operações do mundo real. Isso permite que recursos sejam administrados digitalmente dentro da DAO enquanto fornecedores, creators e parceiros continuam recebendo por meios tradicionais, como Pix, sem precisar interagir diretamente com blockchain.
+
+&ensp; A blockchain Solana foi escolhida por ser rápida e reunir, em uma única infraestrutura, custo operacional baixo, experiência de uso fluida e um ecossistema financeiro capaz de sustentar uma organização econômica formada por centenas de sellers independentes.
 
 ### 1.2.3. Como funciona para o recebedor
 &ensp; Fornecedores, transportadoras, atacadistas, creators não precisam saber que existe blockchain. O sistema gera uma wallet custodial vinculada ao CNPJ deles e usa uma integração com fintech brasileira (Brla Digital ou similar) para converter USDC em BRL e depositar via Pix na conta bancária deles. Recebem como se fosse uma transferência normal.
