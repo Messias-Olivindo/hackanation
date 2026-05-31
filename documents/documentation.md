@@ -72,7 +72,6 @@ Votação on-chain → execução automática
 
 ## 2.1. Matriz de Riscos
 
-
 A Matriz de Riscos é uma ferramenta visual utilizada para priorizar os riscos de um projeto com base em duas dimensões: probabilidade, que mede a chance de um risco ocorrer, e impacto, que representa suas consequências caso se concretize (PROJECT MANAGEMENT INSTITUTE, 2017). A combinação dessas dimensões gera uma classificação geral — alta, média ou baixa — representada por cores, facilitando o foco da equipe nos riscos mais críticos e orientando a construção de planos de ação preventivos. No contexto deste projeto, a matriz foi aplicada para avaliar os riscos do desenvolvimento da plataforma da SellerDAO, considerando desde vulnerabilidades técnicas e desafios de governança até exposições regulatórias inerentes ao modelo de negócio proposto. Segue o nosso modelo:
 
 
@@ -203,7 +202,7 @@ Trata-se de um risco de natureza operacional e regulatória. Sua probabilidade d
 ---
 
 
-## 2.2. Matriz de Oportunidades
+## 2.1.2 Matriz de Oportunidades
 
 
 A Matriz de Oportunidades é uma ferramenta visual complementar à Matriz de Riscos, utilizada para identificar e priorizar fatores externos e internos que podem ser explorados em benefício do projeto (PROJECT MANAGEMENT INSTITUTE, 2017). Assim como nos riscos, as oportunidades são avaliadas a partir de duas dimensões — probabilidade de ocorrência e potencial de impacto positivo —, gerando uma classificação geral que orienta a equipe a concentrar esforços nas frentes de maior retorno estratégico. No contexto deste projeto, a matriz foi aplicada para mapear as oportunidades associadas à plataforma da SellerDAO, abrangendo desde ganhos econômicos diretos para os sellers até vantagens competitivas de posicionamento, tecnologia e comunidade. Segue o nosso modelo:
@@ -219,7 +218,7 @@ A Matriz de Oportunidades é uma ferramenta visual complementar à Matriz de Ris
 ---
 
 
-### 2.2.1. Oportunidade de Ganho de Poder de Barganha em Compras de Estoque
+### Oportunidade de Ganho de Poder de Barganha em Compras de Estoque
 
 
 Trata-se de uma oportunidade de natureza econômica e estratégica. Sua probabilidade de ocorrência foi estimada em 70%, pois ao consolidar as contribuições de múltiplos sellers, a SellerDAO atinge volumes de compra que individualmente seriam inacessíveis para pequenos e médios vendedores, criando condições reais para negociação de preços de atacado. O impacto foi classificado como alto porque, caso essa oportunidade se concretize, a DAO resolve diretamente a assimetria estrutural de custos que é um dos problemas centrais dos pequenos sellers de marketplaces, aumentando suas margens e competitividade. A combinação desses fatores resulta em uma classificação geral alta, tornando esta a oportunidade mais diretamente alinhada com a proposta de valor central da SellerDAO. Como plano de ação, a equipe deve construir um exemplo numérico concreto na documentação — por exemplo, 100 sellers faturando R$30 mil por mês cada, demonstrando o volume consolidado e os ganhos potenciais de negociação com fornecedores.
@@ -228,7 +227,7 @@ Trata-se de uma oportunidade de natureza econômica e estratégica. Sua probabil
 ---
 
 
-### 2.2.2. Oportunidade de Mídia e Creators Mais Baratos via Blocos Coletivos
+### Oportunidade de Mídia e Creators Mais Baratos via Blocos Coletivos
 
 
 Trata-se de uma oportunidade de natureza econômica e de marketing. Sua probabilidade de ocorrência foi estimada em 70%, pois a mesma lógica de escala que viabiliza compras coletivas de estoque também se aplica a campanhas com creators e mídia paga em plataformas como TikTok Shop e Meta Ads, onde CPM e CPC menores são diretamente acessíveis a quem negocia volumes maiores. O impacto foi classificado como alto porque, caso essa oportunidade se concretize, os sellers da DAO podem acessar creators com maior alcance e campanhas com melhor retorno sobre investimento, ampliando sua capacidade de geração de receita sem aumento proporcional de custo. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve mapear, ainda na fase de MVP, os formatos de compra coletiva de mídia e parcerias com creators que podem ser viabilizados por meio da tesouraria, apresentando isso como um diferencial competitivo da DAO.
@@ -237,7 +236,7 @@ Trata-se de uma oportunidade de natureza econômica e de marketing. Sua probabil
 ---
 
 
-### 2.2.3. Oportunidade de Crédito Mais Barato via Fundo Interno de Giro
+### Oportunidade de Crédito Mais Barato via Fundo Interno de Giro
 
 
 Trata-se de uma oportunidade de natureza financeira. Sua probabilidade de ocorrência foi estimada em 50%, pois a viabilidade de um fundo interno de giro depende da escala da tesouraria e da maturidade da governança da DAO, fatores que ainda precisam ser validados. O impacto foi classificado como alto porque, caso essa oportunidade se concretize, os sellers da DAO podem acessar crédito a taxas significativamente menores do que as praticadas por bancos tradicionais: a taxa média de juros para MEIs no Brasil é de 44,04% ao ano, mais de quatro vezes a taxa Selic —, chegando a 51% ao ano na Região Nordeste (SEBRAE; BANCO CENTRAL DO BRASIL, 2024). A SellerDAO pode oferecer uma alternativa interna com custo e transparência muito superiores. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve incluir no roadmap do produto, como fase posterior ao MVP, a especificação de um módulo de crédito interno com regras claras de elegibilidade, limite de exposição e recuperação em caso de inadimplência.
@@ -246,7 +245,7 @@ Trata-se de uma oportunidade de natureza financeira. Sua probabilidade de ocorr�
 ---
 
 
-### 2.2.4. Oportunidade de Infraestrutura Pioneira de DAO para Sellers na América Latina
+### Oportunidade de Infraestrutura Pioneira de DAO para Sellers na América Latina
 
 
 Trata-se de uma oportunidade de natureza estratégica e de posicionamento. Sua probabilidade de ocorrência foi estimada em 70%, pois o mercado de sellers de marketplaces na América Latina ainda não possui uma estrutura equivalente de DAO com tesouraria on-chain e governança proporcional à contribuição, criando uma janela de oportunidade real de first-mover. O impacto foi classificado como muito alto porque, caso essa oportunidade se concretize, a SellerDAO pode se tornar referência continental em infraestrutura financeira coletiva para o e-commerce independente, atraindo atenção de investidores, fundos de Web3 e parceiros institucionais muito além do escopo inicial do hackathon. A combinação desses fatores resulta em uma classificação geral alta, tornando esta a oportunidade de maior potencial de impacto estratégico do projeto. Como plano de ação, a equipe deve posicionar explicitamente a SellerDAO como infraestrutura pioneira na documentação e nas apresentações, reforçando a combinação única de DAO, Solana, marketplaces tradicionais e compliance brasileiro.
@@ -255,7 +254,7 @@ Trata-se de uma oportunidade de natureza estratégica e de posicionamento. Sua p
 ---
 
 
-### 2.2.5. Oportunidade de Diferenciação por Segurança com Multisig Squads
+### Oportunidade de Diferenciação por Segurança com Multisig Squads
 
 
 Trata-se de uma oportunidade de natureza tecnológica e reputacional. Sua probabilidade de ocorrência foi estimada em 90%, pois a adoção do Squads protocolo multisig formalmente verificado e consolidado como padrão de segurança para tesourarias na Solana, é uma decisão técnica diretamente no controle da equipe e pode ser comunicada como diferencial desde o primeiro dia. O impacto foi classificado como moderado a alto porque, caso essa oportunidade se concretize, a SellerDAO ganha uma narrativa forte de robustez e transparência frente a modelos centralizados, aumentando a confiança dos sellers para aportar capital coletivo na plataforma. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve destacar o uso do Squads como pilar de segurança nas apresentações e na documentação técnica, explicando de forma acessível para sellers não técnicos o que significa ter uma tesouraria multisig auditável on-chain.
@@ -264,7 +263,7 @@ Trata-se de uma oportunidade de natureza tecnológica e reputacional. Sua probab
 ---
 
 
-### 2.2.6. Oportunidade de Dados Agregados como Ativo Estratégico
+### Oportunidade de Dados Agregados como Ativo Estratégico
 
 
 Trata-se de uma oportunidade de natureza tecnológica e de produto. Sua probabilidade de ocorrência foi estimada em 70%, pois os snapshots on-chain e os registros off-chain de faturamento e contribuição acumulados ao longo do tempo geram uma base de dados única sobre comportamento de compra, sazonalidade e performance de sellers de marketplaces, produzida naturalmente como subproduto do funcionamento da DAO. O impacto foi classificado como moderado a alto porque, caso essa oportunidade se concretize, a SellerDAO pode transformar essa inteligência em insumo para negociação com fornecedores, scoring de crédito interno e futuros produtos de analytics — criando uma vantagem competitiva difícil de replicar. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve projetar desde o início a estrutura de dados pensando em analytics futuros, garantindo que os snapshots on-chain registrem informações suficientes para análises de tendência sem comprometer privacidade e compliance.
@@ -273,7 +272,7 @@ Trata-se de uma oportunidade de natureza tecnológica e de produto. Sua probabil
 ---
 
 
-### 2.2.7. Oportunidade de Comunidade com Governança Real sobre Capital Coletivo
+### Oportunidade de Comunidade com Governança Real sobre Capital Coletivo
 
 
 Trata-se de uma oportunidade de natureza organizacional e de comunidade. Sua probabilidade de ocorrência foi estimada em 70%, pois a substituição de associações informais baseadas em confiança interpessoal por regras explícitas de governança, votações transparentes e execução automática via smart contracts resolve um problema estrutural real citado na problemática do projeto — a vulnerabilidade de grupos de compra informais a golpes e má gestão. O impacto foi classificado como alto porque, caso essa oportunidade se concretize, a SellerDAO pode criar uma comunidade de sellers genuinamente engajada, com senso de ownership sobre o capital coletivo e confiança na imparcialidade das decisões, o que é um ativo intangível de altíssimo valor para a sustentabilidade de longo prazo da DAO. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve comunicar ativamente, nas apresentações e materiais de onboarding, a diferença entre a governança on-chain da SellerDAO e os grupos informais de compra coletiva, reforçando a transparência e a auditabilidade como diferenciais centrais.
@@ -282,40 +281,36 @@ Trata-se de uma oportunidade de natureza organizacional e de comunidade. Sua pro
 ---
 
 
-### 2.2.8. Oportunidade de Parcerias com Fintechs e Provedores Regulados
+### Oportunidade de Parcerias com Fintechs e Provedores Regulados
 
 
 Trata-se de uma oportunidade de natureza estratégica e financeira. Sua probabilidade de ocorrência foi estimada em 50%, pois, ao estruturar-se adequadamente em termos de compliance, KYC/AML e modelo jurídico, a SellerDAO se torna um parceiro atraente para fintechs que desejam entrar no segmento de cripto e DAOs no Brasil de forma segura e regulatoriamente embasada. O impacto foi classificado como moderado a alto porque, caso essa oportunidade se concretize, parcerias com fintechs reguladas podem resolver a barreira de onboarding em USDC — ao abstrair a conversão BRL-USDC — e ampliar significativamente o alcance e a credibilidade da plataforma junto a sellers com menor maturidade cripto. A combinação desses fatores resulta em uma classificação geral média a alta. Como plano de ação, a equipe deve mapear fintechs brasileiras com atuação em cripto e licenciamento adequado, iniciar conversas exploratórias e incluir na documentação a integração com parceiros regulados como parte do roadmap de crescimento da SellerDAO.
 
 
 ---
-## 2.3. Modelo de 5 Forças de Porter (SellerDAO)
-
+## 2.2 Modelo de 5 Forças de Porter (SellerDAO)
 
 As Cinco Forças de Porter são utilizadas para analisar a competitividade de um mercado através de cinco dimensões estratégicas. Nesta seção, essa metodologia foi aplicada para compreender o contexto competitivo da SellerDAO e alinhar o desenvolvimento da solução ao ambiente de pequenos sellers de marketplaces na América Latina, considerando tanto o ecossistema de plataformas digitais quanto o surgimento de estruturas descentralizadas como DAOs (PORTER, 1979).
 
 
-### 2.3.1. Rivalidade entre concorrentes existentes
+### Rivalidade entre concorrentes existentes
 A SellerDAO atua na interseção entre serviços financeiros coletivos, infraestrutura cripto e soluções para sellers de marketplaces como Mercado Livre, Shopee e TikTok Shop. Na prática, ela concorre indiretamente com bancos e fintechs que oferecem crédito, ERPs e hubs de integração que prometem ganho de eficiência, programas de compra coletiva informais entre lojistas e iniciativas dos próprios marketplaces para apoiar vendedores estratégicos. A rivalidade é classificada como moderada, pois já existem alternativas que atacam partes do problema — crédito, automação, negociação individual —, mas ainda são raras as soluções que combinam tesouraria coletiva, governança compartilhada e foco explícito em reduzir assimetrias de escala para pequenos sellers por meio de uma DAO sobre blockchain (SALESFORCE, 2024).
 
 
-### 2.3.2. Poder de barganha dos fornecedores
+### Poder de barganha dos fornecedores
 No contexto da SellerDAO, os fornecedores são os agentes dos quais a operação depende diretamente para existir: infraestrutura de blockchain (Solana), protocolos de tesouraria e segurança (como Squads), APIs dos marketplaces (Mercado Livre, Shopee, TikTok Shop), provedores de KYC/AML e, em estágios posteriores, exchanges ou fintechs responsáveis pela liquidez em USDC. A concentração de poder em alguns desses elos — por exemplo, poucos grandes provedores de infraestrutura cripto regulada e o controle exclusivo das APIs pelos próprios marketplaces — faz com que mudanças de política, preços ou condições técnicas possam impactar de forma significativa a capacidade da SellerDAO de operar e escalar, resultando em um poder de barganha dos fornecedores classificado como alto. Nesse cenário, a arquitetura proposta — uso de componentes amplamente adotados no ecossistema Solana, desenho modular de integrações e, no futuro, parcerias com múltiplos provedores regulados — funciona como estratégia para reduzir lock-in tecnológico e diluir o poder de negociação concentrado nesses atores críticos.
 
 
-### 2.3.3. Poder de barganha dos clientes (sellers membros da DAO)
+### Poder de barganha dos clientes (sellers membros da DAO)
 Os "clientes" da SellerDAO são pequenos e médios sellers que faturam relativamente pouco de forma individual, compram estoque a preço de balcão, contratam mídia cara e acessam crédito com juros elevados. Apesar de terem pouco poder de barganha frente a bancos, marketplaces e grandes fornecedores, esses sellers possuem alto poder de escolha em relação à própria SellerDAO: podem simplesmente não aderir, reduzir sua contribuição ou migrar para alternativas mais simples, como crédito tradicional ou soluções SaaS que exijam menor mudança de comportamento. Por isso, o poder de barganha dos clientes é considerado alto do ponto de vista da DAO, exigindo que a solução entregue benefícios econômicos mensuráveis — melhor preço de estoque, mídia mais barata, acesso a crédito interno mais justo — e uma experiência de uso que abstraia a complexidade de blockchain para garantir adesão e permanência (BUSINESS INSIDER, 2022).
 
 
-### 2.3.4. Ameaça de novos entrantes
+### Ameaça de novos entrantes
 A ameaça de novos entrantes é classificada como média a alta. Do lado tecnológico, projetos de DAO e tesouraria on-chain podem ser replicados com relativa rapidez por outras equipes, já que o ecossistema de DeFi e DAOs fornece frameworks e componentes reutilizáveis. Por outro lado, construir uma comunidade engajada de sellers com volume financeiro suficiente para negociar em bloco e histórico de governança confiável é um processo incremental e lento, o que cria barreiras de entrada baseadas em reputação, dados acumulados e relações com fornecedores e fintechs parceiras. Fintechs tradicionais, bancos digitais e até os próprios marketplaces podem tentar lançar soluções similares — fundos coletivos, crédito melhorado, programas de compra conjunta —, usando sua marca e acesso privilegiado a dados para competir, o que torna estratégico para a SellerDAO consolidar-se rapidamente como referência nesse nicho específico de infraestrutura coletiva para sellers de marketplace (CHEN et al., 2023).
 
 
-### 2.3.5. Ameaça de produtos substitutos
+### Ameaça de produtos substitutos
 A ameaça de produtos substitutos é alta. Os problemas que a SellerDAO busca resolver — acesso a melhores condições de compra de estoque, mídia mais eficiente e crédito menos oneroso — também podem ser atacados por linhas de crédito tradicionais, cooperativas de crédito, associações de lojistas, consórcios empresariais, programas de incentivo dos próprios marketplaces e plataformas de educação e apoio ao seller oferecidas por grandes empresas de tecnologia. Além disso, iniciativas centralizadas que ofereçam benefícios de clube para pequenos comerciantes, sem expor o usuário a conceitos de cripto, podem ser percebidas como soluções mais simples por parte do público. A vantagem competitiva da SellerDAO depende, portanto, da capacidade de oferecer uma combinação difícil de replicar: transparência de uso dos recursos via blockchain, governança efetivamente compartilhada e ganhos econômicos concretos para o pequeno seller, mantendo ao mesmo tempo uma camada de experiência que esconda a complexidade técnica e preserve a sensação de familiaridade com meios de pagamento tradicionais (SEMRUSH, 2023).
-
-
-
 
 # 3. Produto
 
