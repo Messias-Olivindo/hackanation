@@ -81,7 +81,7 @@ export function useSellerDao() {
     if (!wallet.publicKey || !memberPda) throw new Error("Wallet não inicializada");
 
     // Consulta o estado global para determinar o ID sequencial da nova proposta
-    const daoState = await program.account.dao.fetch(daoPda);
+    const daoState: any = await program.account.dao.fetch(daoPda);
     const proposalId = daoState.proposalCount;
     const proposalPda = getProposalPda(daoPda, proposalId);
 

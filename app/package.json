@@ -11,6 +11,11 @@
     "demo:vote": "ts-node scripts/demo-vote.ts"
   },
   "dependencies": {
+    "@coral-xyz/anchor": "^0.29.0",
+    "@solana/spl-token": "^0.4.6",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/wallet-adapter-react-ui": "^0.9.35",
+    "@solana/wallet-adapter-wallets": "^0.19.32",
     "@solana/web3.js": "^1.83.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@types/react": "18.2.0",
