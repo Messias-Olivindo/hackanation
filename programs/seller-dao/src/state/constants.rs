@@ -12,7 +12,7 @@
 
 /// Seed para a PDA principal da DAO (conta global de estado).
 /// Garante que exista apenas uma instância da DAO por programa.
-pub const DAO_SEED: &[u8] = b"dao";
+pub const DAO_SEED: &[u8] = b"dao_v2";
 
 /// Seed para a PDA de autoridade do treasury.
 /// Esta PDA é usada como "authority" da token account do treasury,
@@ -38,4 +38,4 @@ pub const VOTE_RECORD_SEED: &[u8] = b"vote";
 ///
 /// Para deploy em produção/devnet, altere para o valor real de governança:
 ///   pub const VOTING_PERIOD_SECONDS: i64 = 72 * 60 * 60; // 72 horas
-pub const VOTING_PERIOD_SECONDS: i64 = 3;
+pub const VOTING_PERIOD_SECONDS: i64 = 60;

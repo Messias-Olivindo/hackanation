@@ -38,7 +38,7 @@ use dao_accounts::*;
 
 /// ID do programa — deve corresponder ao keypair em target/deploy/seller_dao-keypair.json
 /// e ao valor em Anchor.toml [programs.localnet].
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+declare_id!("FPezMd8XbqDEYXsDgqRW7bpGQ6HDdnjnzMbKpNMjcPkL");
 
 #[program]
 pub mod seller_dao {

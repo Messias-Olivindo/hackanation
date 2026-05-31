@@ -59,7 +59,7 @@ dynamic_port_range = "8021-8050"
 ```
 
 #### Período de votação para testes
-O `VOTING_PERIOD_SECONDS` está configurado como 3 segundos para testes locais rápidos. Para produção, alterar em `programs/seller-dao/src/state/constants.rs`:
+O `VOTING_PERIOD_SECONDS` está configurado como **60 segundos** para permitir testes manuais confortáveis e robustos via frontend (Phantom/Privy) e integração contínua sem erros de propagação de transações (*ProposalClosed*). Para produção, alterar em `programs/seller-dao/src/state/constants.rs`:
 ```rust
 pub const VOTING_PERIOD_SECONDS: i64 = 72 * 60 * 60; // 72 horas
 ```
@@ -144,7 +144,7 @@ anchor test
 | `gossip_addr bind_to port 8000: Address already in use` | A porta 8000 está ocupada. A config em `Anchor.toml` já resolve isso usando porta 8020. |
 | `target/deploy/seller_dao.so not found` | Rode `anchor build` e copie os artefatos conforme passo 4 acima. |
 | `IDL does not have metadata.address` | Copie o IDL: `cp target/idl/seller_dao.json programs/seller-dao/target/idl/` |
-| `ProposalOpen` no teste execute | O `VOTING_PERIOD_SECONDS` precisa ser curto (3s) para testes. Verifique `state/constants.rs`. |
+| `ProposalOpen` no teste execute | O `VOTING_PERIOD_SECONDS` precisa expirar para permitir execução. Verifique se o setTimeout em seus testes é maior que o valor em `constants.rs`. |
 | Erro de stack no `spl-token-2022` durante `anchor build` | Alinhe versoes de Solana/Anchor e rode `cargo update`. |
 
 ---
@@ -213,7 +213,7 @@ Antes do deploy final, altere o período de votação em `programs/seller-dao/sr
 
 ```rust
 // De:
-pub const VOTING_PERIOD_SECONDS: i64 = 3;
+pub const VOTING_PERIOD_SECONDS: i64 = 60; // 60 segundos para testes do frontend
 
 // Para:
 pub const VOTING_PERIOD_SECONDS: i64 = 72 * 60 * 60; // 72 horas
