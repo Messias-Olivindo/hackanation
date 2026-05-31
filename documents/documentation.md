@@ -312,6 +312,20 @@ A ameaça de novos entrantes é classificada como média a alta. Do lado tecnol�
 ### Ameaça de produtos substitutos
 A ameaça de produtos substitutos é alta. Os problemas que a SellerDAO busca resolver — acesso a melhores condições de compra de estoque, mídia mais eficiente e crédito menos oneroso — também podem ser atacados por linhas de crédito tradicionais, cooperativas de crédito, associações de lojistas, consórcios empresariais, programas de incentivo dos próprios marketplaces e plataformas de educação e apoio ao seller oferecidas por grandes empresas de tecnologia. Além disso, iniciativas centralizadas que ofereçam benefícios de clube para pequenos comerciantes, sem expor o usuário a conceitos de cripto, podem ser percebidas como soluções mais simples por parte do público. A vantagem competitiva da SellerDAO depende, portanto, da capacidade de oferecer uma combinação difícil de replicar: transparência de uso dos recursos via blockchain, governança efetivamente compartilhada e ganhos econômicos concretos para o pequeno seller, mantendo ao mesmo tempo uma camada de experiência que esconda a complexidade técnica e preserve a sensação de familiaridade com meios de pagamento tradicionais (SEMRUSH, 2023).
 
+## 2.3. Estratégias de Inserção no Mercado (Go-to-Market da SellerDAO)
+
+A estratégia de go-to-market da SellerDAO segue uma lógica faseada: começar focado, gerar provas de valor mensuráveis e crescer a partir de resultados concretos (BLANK; DORF, 2012). A implementação inicial é concentrada em um único marketplace — preferencialmente o Mercado Livre — para validar a integração técnica, o fluxo de contribuição para a tesouraria e a viabilidade da primeira operação coletiva antes de qualquer expansão.
+
+## Fase 1 — Piloto (Meses 1–2) 
+Validação técnica e de valor com 10 a 20 sellers selecionados. O piloto é considerado bem-sucedido ao concluir ao menos uma operação coletiva completa — como uma compra conjunta de estoque com economia de pelo menos 10% em relação ao preço individual — sem incidentes críticos de integração.
+
+## Fase 2 — Beta Fechado (Meses 3–5)
+ Ampliação para 50 a 150 sellers. A aquisição desses primeiros usuários ocorre por meio de canais onde vendedores de marketplace já se reúnem organicamente, grupos no WhatsApp, comunidades no Facebook e fóruns especializados, levando a proposta da SellerDAO diretamente ao ambiente em que esse público já está. A proposta de valor é comunicada em linguagem de negócio "comprar estoque mais barato junto, negociar mídia em bloco, acessar crédito mais justo", abstraindo deliberadamente a camada técnica de blockchain. Os participantes co-constroem as regras de governança e se tornam os primeiros embaixadores da DAO.
+
+## Fase 3 — Expansão (Mês 6 em diante):  
+Com casos reais documentados, o crescimento passa a ser impulsionado por community-led growth (OPENVIEW, 2021)  depoimentos, indicações entre sellers e conteúdo baseado em evidências de economia gerada. Em paralelo, a integração com novos marketplaces como Shopee e TikTok Shop é iniciada de forma gradual, replicando o modelo técnico e operacional validado nas fases anteriores e ampliando o alcance da DAO para sellers de outras plataformas.
+
+---
 # 3. Produto
 
 ## 3.1. Personas
