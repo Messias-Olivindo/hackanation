@@ -20,28 +20,37 @@ This directory contains all documentation, specifications, and references for th
 ## Key Files
 
 ### Core Documentation
+
 - [Project Context](documentation/project-context.md) - Complete project overview
 - [Hackathon Details](documentation/hackathon-details.md) - Submission requirements
+- [Solution Documentation](documentation/solution-documentation.md) - Full solution document
+- [Payment Flow Validation](documentation/payment-flow-validated.md) - Onboarding and payment flow validation
 
 ### Specifications
+
 - [Project Specifications](specs/project-specs.md) - Functional and technical requirements
 
 ### Skills
+
 - [Solana Skills](skills/solana.md) - Guidance for Solana program decisions and structure
 
 ### Templates
+
 - [Proposal Template](templates/proposal-template.md) - For submitting treasury usage proposals
 - [Technical Documentation Template](templates/technical-doc-template.md) - For documenting code changes
 
 ### Plans
+
 - [Project Fronts Plan](plans/process-project-fronts-1.md) - Development plan for all work fronts
 
 ### Version History
+
 - [Version History](versions/version-history.md) - Project evolution and future plans
 
 ## Private Directory (Individual Use)
 
 The `private/` directory is reserved for individual team members' personal notes, planning documents, and working drafts that:
+
 - Contain personal thoughts and ideas
 - Include work-in-progress plans
 - Contain sensitive or preliminary information

@@ -14,24 +14,24 @@ Projeto desenvolvido para submissão no **Hackathon Solana Brasil 2026**, trilha
 
 Sellers de marketplace (Mercado Livre, Shopee, TikTok Shop) operam de forma isolada e perdem poder de barganha nos espaços onde o marketplace não interfere:
 
-| Situação | Seller Isolado | Sellers na DAO |
-|---|---|---|
-| Compra de estoque | Preço de atacado ruim, baixo volume | Desconto real por compra coletiva (30–40%) |
+| Situação                         | Seller Isolado                                                   | Sellers na DAO                                            |
+| -------------------------------- | ---------------------------------------------------------------- | --------------------------------------------------------- |
+| Compra de estoque                | Preço de atacado ruim, baixo volume                              | Desconto real por compra coletiva (30–40%)                |
 | Creator pool (lives TikTok Shop) | Sem acesso a creators grandes, sem divisão automática de receita | Revenue share automático entre sellers via smart contract |
-| Mídia paga | CPM alto, disputa com grandes varejistas | CPM menor via compra em bloco (até 40% de redução) |
-| Capital de giro | Travado 30–60 dias, antecipação a 4% a.m. | Empréstimo coletivo interno a ~1,5% a.m. |
-| Dados de mercado | Isolados, sem benchmark | Agregados em tempo real |
-| Frete (canais próprios) | R$ 28/pacote pelo balcão | R$ 14–16/pacote via contrato coletivo com transportadora |
+| Mídia paga                       | CPM alto, disputa com grandes varejistas                         | CPM menor via compra em bloco (até 40% de redução)        |
+| Capital de giro                  | Travado 30–60 dias, antecipação a 4% a.m.                        | Empréstimo coletivo interno a ~1,5% a.m.                  |
+| Dados de mercado                 | Isolados, sem benchmark                                          | Agregados em tempo real                                   |
+| Frete (canais próprios)          | R$ 28/pacote pelo balcão                                         | R$ 14–16/pacote via contrato coletivo com transportadora  |
 
 ### 2.1 O que cada marketplace bloqueia — e onde a DAO age
 
 A DAO **não briga com o marketplace**. A estratégia é agir nos espaços que o marketplace não controla.
 
-| Plataforma | Bloqueado pelo marketplace | Livre para a DAO atuar |
-|---|---|---|
-| Mercado Livre | Frete (Mercado Envios fixo), taxa da plataforma, algoritmo de ranking | Estoque e fornecedor, anúncio externo (tráfego), capital de giro |
-| Shopee | Frete subsidiado pela Shopee, Moedas Shopee | Fornecedor/atacado, lives e afiliados externos, antecipação de recebíveis |
-| TikTok Shop | Comissão de afiliado (fixa), algoritmo de feed | Contratação de creators, produção de conteúdo, estoque pré-posicionado |
+| Plataforma    | Bloqueado pelo marketplace                                            | Livre para a DAO atuar                                                    |
+| ------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Mercado Livre | Frete (Mercado Envios fixo), taxa da plataforma, algoritmo de ranking | Estoque e fornecedor, anúncio externo (tráfego), capital de giro          |
+| Shopee        | Frete subsidiado pela Shopee, Moedas Shopee                           | Fornecedor/atacado, lives e afiliados externos, antecipação de recebíveis |
+| TikTok Shop   | Comissão de afiliado (fixa), algoritmo de feed                        | Contratação de creators, produção de conteúdo, estoque pré-posicionado    |
 
 ---
 
@@ -44,18 +44,23 @@ Uma DAO (Organização Autônoma Descentralizada) **na Solana** que agrupa selle
 ### 3.1 Casos de uso por plataforma
 
 **Todos os marketplaces**
+
 - **Compra coletiva de estoque no atacado:** sellers identificam fornecedor com desconto por volume (ex: 35% a partir de 500kg). A DAO vota, o treasury paga, o estoque é rateado proporcionalmente. Economia: 30–40% no custo do produto.
 
 **Mercado Livre**
+
 - **Fundo coletivo de anúncio externo:** ML Ads interno é leilão — seller pequeno perde pro grande. Tráfego externo (Google Shopping, Meta Ads) apontando pro anúncio do ML é livre. A DAO contrata campanha coletiva por categoria (ex: "legging fitness") e distribui cliques entre membros por volume.
 
 **TikTok Shop**
+
 - **Creator pool:** creator com 500k seguidores cobra R$ 4.000 por live. A DAO contrata a live coletivamente — 10 sellers, cada um exibe 3 produtos, paga R$ 400. Revenue share distribuído automaticamente via smart contract conforme vendas geradas por produto.
 
 **Shopee**
+
 - **Antecipação coletiva de recebíveis:** seller com R$ 12.000 parcelado em 6x pode tomar empréstimo do treasury coletivo a ~1,5% a.m. (vs 4% a.m. de fintechs). Reembolso descontado automaticamente das próximas contribuições. Stake do seller como colateral em caso de inadimplência.
 
 **Canais próprios (Instagram, site, WhatsApp)**
+
 - **Frete próprio fora do marketplace:** volume coletivo para negociar contrato direto com Jadlog, Sequoia ou transportadora regional. Etiquetas geradas via API da transportadora, crédito descontado do saldo no treasury. Frete de R$ 28 → R$ 14–16.
 
 ### 3.2 Casos de uso prioritários para o hackathon
@@ -68,23 +73,27 @@ Uma DAO (Organização Autônoma Descentralizada) **na Solana** que agrupa selle
 ## 4. Fluxo de Funcionamento
 
 ### Passo 1 — Entrada na DAO
+
 - Seller deposita stake mínimo (**10 USDC**) em programa Anchor na Solana
 - Recebe **tokens de governança** proporcionais ao volume de vendas dos últimos 30 dias
 - Teto de concentração para evitar dominância de um único seller
 - Parte do stake vai para o treasury coletivo, parte para os criadores como taxa de onboarding
 
 ### Passo 2 — Alimentação do Treasury
+
 - A cada venda processada, **1–2% vai automaticamente para o treasury** via smart contract
 - Sem intervenção manual — programa Solana distribui no momento do pagamento
 - Treasury visível publicamente no Solana Explorer
 
 ### Passo 3 — Proposta e Votação On-Chain
+
 - Qualquer membro propõe uso do treasury (compra coletiva, creator pool, mídia em bloco, empréstimo etc.)
 - Proposta aberta por **72 horas**
 - Membros votam com tokens de governança
 - Aprovação: maioria simples (ou supermaioria para gastos grandes)
 
 ### Passo 4 — Execução Trustless via Squads Multisig
+
 - Proposta aprovada: **Squads Protocol** coleta M-de-N assinaturas dos membros
 - Threshold atingido → contrato executa automaticamente, sem nenhuma pessoa com a chave do treasury
 - Treasury envia USDC para wallet do fornecedor (custodial ou nativa)
@@ -114,6 +123,7 @@ Pagar fornecedores do mundo real (Jadlog, atacadistas, creators) exige que algu�
 Fornecedores (Jadlog, atacadistas, creators) **não precisam saber que existe blockchain**.
 
 **Fluxo completo:**
+
 1. DAO aprova pagamento para o fornecedor (ex: R$ 3.200 para Jadlog)
 2. Sistema cria wallet Solana **custodial** vinculada ao CNPJ/CPF do fornecedor (ou usa wallet já registrada)
 3. Treasury envia USDC para essa wallet — 100% on-chain, 100% auditável
@@ -127,6 +137,7 @@ Fornecedores (Jadlog, atacadistas, creators) **não precisam saber que existe bl
 ## 6. Stack Técnica
 
 ### On-chain (Programa Anchor)
+
 - **Linguagem:** Rust + Anchor Framework
 - **4 instruções principais:**
   - `join_dao` — stake + mint de governance token
@@ -138,16 +149,46 @@ Fornecedores (Jadlog, atacadistas, creators) **não precisam saber que existe bl
 - **Estimativa:** ~200 linhas de código real
 
 ### Off-chain / Integrações
+
 - **On/off ramp BRL:** Brla Digital ou Transfero (USDC → BRL via Pix)
 - **Wallets custodiais:** geradas pelo sistema, vinculadas a CNPJ/CPF do fornecedor
 - **KYC/AML:** responsabilidade da entidade operadora (LTDA ou cooperativa)
 
 ### Frontend
-- **React** + `@solana/web3.js`
-- Wallet connect via **Phantom**
+
+- **Next.js** + TypeScript
+- **UI:** TailwindCSS + biblioteca de componentes para UI minimalista e focada em dados
+- **Web3:** `@solana/web3.js` + `@solana/wallet-adapter-react` (Phantom)
 - Dashboard com: treasury atual em USDC, propostas ativas com contagem de votos em tempo real, histórico de execuções, membros ativos
 
+**Setup esperado do Tailwind (MVP):**
+
+- `tailwindcss`, `postcss`, `autoprefixer` instalados
+- `tailwind.config` com `content` apontando para `app/`, `pages/`, `src/`
+- `postcss.config` com `tailwindcss` e `autoprefixer`
+- `globals.css` com `@tailwind base; @tailwind components; @tailwind utilities;`
+
+### Integracao de pagamento (on-ramp)
+
+- **Status:** validar apenas MoonPay para PIX -> USDC na Solana e SmartPay para USDC -> PIX.
+- **MoonPay (docs):** ramps e virtual accounts com APIs/SDKs e KYC/KYB integrados. Nao ha confirmacao publica de PIX -> USDC nem de SmartPay.
+- **MVP hackathon:** apenas simulacao do fluxo no cliente, sem chaves privadas nem dados sensiveis
+
+### Backend (visao de futuro, fora do MVP)
+
+- **NestJS** + **PostgreSQL** + **Prisma** para ingestao de dados off-chain
+- **Fila de eventos (ex.: Redis/BullMQ)** para processar volumes de vendas e reconciliacao
+- **KYC/AML** e integracao segura com provedores de on/off-ramp
+
+### Referencias (pagamento e on-ramp)
+
+- https://www.moonpay.com/business
+- https://www.moonpay.com/business/ramps
+- https://www.moonpay.com/business/virtual-accounts
+- https://dev.moonpay.com/
+
 ### Demo (Hackathon)
+
 - 5–10 sellers pré-carregados com wallets de teste na **Devnet**
 - Proposta real de **compra coletiva de estoque** sendo votada ao vivo durante a apresentação
 - Treasury visível no **Solana Explorer** (verificável em 3 segundos — argumento mais forte perante a banca)
@@ -156,12 +197,12 @@ Fornecedores (Jadlog, atacadistas, creators) **não precisam saber que existe bl
 
 ## 7. Modelo de Monetização
 
-| Fonte | Mecanismo | Escala |
-|---|---|---|
-| **Fee por transação** (principal) | 0,3–0,5% hardcoded no contrato em cada pagamento que sai do treasury | Linear com volume — R$ 200/mês com 100 sellers, R$ 2.000/mês com 1.000 |
-| **Taxa de entrada** | Parte do stake de 10 USDC vai para os criadores como onboarding fee | Cresce com número de sellers |
-| **SellerDAO Pro** (SaaS) | Licença mensal para grupos que querem DAO fechada de nicho (ex: só sellers de fitness de SP) | White-label da infraestrutura |
-| **Token de governança** (longo prazo) | Criadores detêm parcela dos tokens emitidos na gênese com vesting | Valor atrelado ao crescimento da rede |
+| Fonte                                 | Mecanismo                                                                                    | Escala                                                                 |
+| ------------------------------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| **Fee por transação** (principal)     | 0,3–0,5% hardcoded no contrato em cada pagamento que sai do treasury                         | Linear com volume — R$ 200/mês com 100 sellers, R$ 2.000/mês com 1.000 |
+| **Taxa de entrada**                   | Parte do stake de 10 USDC vai para os criadores como onboarding fee                          | Cresce com número de sellers                                           |
+| **SellerDAO Pro** (SaaS)              | Licença mensal para grupos que querem DAO fechada de nicho (ex: só sellers de fitness de SP) | White-label da infraestrutura                                          |
+| **Token de governança** (longo prazo) | Criadores detêm parcela dos tokens emitidos na gênese com vesting                            | Valor atrelado ao crescimento da rede                                  |
 
 **Diferencial do fee:** está hardcoded no contrato — ninguém pode remover. Automático, sem negociação, sem inadimplência.
 
@@ -190,25 +231,25 @@ Fornecedores (Jadlog, atacadistas, creators) **não precisam saber que existe bl
 
 ## 10. Riscos do Projeto
 
-| Risco | Tipo | Mitigação |
-|---|---|---|
-| Bootstrap — DAO sem membros não tem treasury | Negócio | Demo com grupo piloto simulado: 10 sellers fictícios com volume real inserido, proposta ativa, treasury visível no explorer |
-| Fornecedor sem wallet Solana | Técnico/UX | Abstração custodial — sistema cria e gerencia a wallet, fornecedor só vê Pix |
-| Regulação de custódia de cripto no Brasil | Regulatório | Entidade operadora registrada assume responsabilidade KYC/AML, mesmo modelo de fintechs existentes |
-| Dependência de fintech para off-ramp | Técnico | Brla Digital e Transfero já operacionais no Brasil; fallback possível com múltiplos provedores |
-| Concentração de poder de voto | Técnico | Teto de concentração implementado no contrato — limite máximo de tokens por wallet |
+| Risco                                        | Tipo        | Mitigação                                                                                                                   |
+| -------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Bootstrap — DAO sem membros não tem treasury | Negócio     | Demo com grupo piloto simulado: 10 sellers fictícios com volume real inserido, proposta ativa, treasury visível no explorer |
+| Fornecedor sem wallet Solana                 | Técnico/UX  | Abstração custodial — sistema cria e gerencia a wallet, fornecedor só vê Pix                                                |
+| Regulação de custódia de cripto no Brasil    | Regulatório | Entidade operadora registrada assume responsabilidade KYC/AML, mesmo modelo de fintechs existentes                          |
+| Dependência de fintech para off-ramp         | Técnico     | Brla Digital e Transfero já operacionais no Brasil; fallback possível com múltiplos provedores                              |
+| Concentração de poder de voto                | Técnico     | Teto de concentração implementado no contrato — limite máximo de tokens por wallet                                          |
 
 ---
 
 ## 11. Pitch — Estrutura dos 2 Minutos
 
-| Bloco | Tempo | Conteúdo |
-|---|---|---|
-| Gancho | 0:00–0:15 | "Quanto custa pra você enviar um pacote hoje? Agora imagina pagar quase metade disso — só porque você chegou junto com outros 99 sellers. Isso é possível. O problema é: quem guarda o dinheiro coletivo sem trair o grupo?" |
-| Dor | 0:15–0:35 | "No Brasil, um seller pequeno paga R$ 28 por entrega. Uma grande varejista paga R$ 14 — no mesmo caminhão. A diferença não é eficiência, é poder de barganha." |
-| Solução | 0:35–1:05 | Apresentar SellerDAO — treasury coletivo, votação on-chain, execução automática via Squads, fornecedor recebe no Pix |
-| Demo ao vivo | 1:05–1:35 | Treasury visível no Solana Explorer, proposta sendo votada, execução automática |
-| Visão + encerramento | 1:35–2:00 | "1,7 milhão de sellers ativos em marketplace no Brasil. A SellerDAO dá poder coletivo programável pra quem sempre competiu sozinho. Poder que não depende de confiança — depende de código." |
+| Bloco                | Tempo     | Conteúdo                                                                                                                                                                                                                     |
+| -------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Gancho               | 0:00–0:15 | "Quanto custa pra você enviar um pacote hoje? Agora imagina pagar quase metade disso — só porque você chegou junto com outros 99 sellers. Isso é possível. O problema é: quem guarda o dinheiro coletivo sem trair o grupo?" |
+| Dor                  | 0:15–0:35 | "No Brasil, um seller pequeno paga R$ 28 por entrega. Uma grande varejista paga R$ 14 — no mesmo caminhão. A diferença não é eficiência, é poder de barganha."                                                               |
+| Solução              | 0:35–1:05 | Apresentar SellerDAO — treasury coletivo, votação on-chain, execução automática via Squads, fornecedor recebe no Pix                                                                                                         |
+| Demo ao vivo         | 1:05–1:35 | Treasury visível no Solana Explorer, proposta sendo votada, execução automática                                                                                                                                              |
+| Visão + encerramento | 1:35–2:00 | "1,7 milhão de sellers ativos em marketplace no Brasil. A SellerDAO dá poder coletivo programável pra quem sempre competiu sozinho. Poder que não depende de confiança — depende de código."                                 |
 
 ---
 
@@ -224,18 +265,18 @@ Fornecedores (Jadlog, atacadistas, creators) **não precisam saber que existe bl
 
 ## 13. Glossário
 
-| Termo | Definição no contexto |
-|---|---|
-| DAO | Organização Autônoma Descentralizada — governança por smart contract |
-| Treasury | Fundo coletivo gerenciado pelo programa Solana (conta PDA) |
-| Governance Token | Token SPL que dá direito de voto proporcional ao volume de vendas |
-| Stake | Depósito mínimo para entrar na DAO (10 USDC) |
-| PDA | Program Derived Address — conta controlada pelo programa, não por wallet privada |
-| Anchor | Framework Rust para desenvolvimento de programas Solana |
-| Squads Protocol | Programa de multisig nativo Solana — execução trustless sem trusted party |
-| Custodial Wallet | Wallet Solana criada e gerenciada pelo sistema em nome do fornecedor |
-| Off-ramp | Conversão de USDC para BRL via fintech (Brla Digital / Transfero) + Pix |
-| Brla Digital | Fintech brasileira que converte USDC para BRL via Pix na Solana |
-| Devnet | Rede de testes da Solana (sem dinheiro real) |
-| CPM | Custo Por Mil impressões em mídia paga |
-| KYC/AML | Know Your Customer / Anti-Money Laundering — obrigação regulatória de identificação |
+| Termo            | Definição no contexto                                                               |
+| ---------------- | ----------------------------------------------------------------------------------- |
+| DAO              | Organização Autônoma Descentralizada — governança por smart contract                |
+| Treasury         | Fundo coletivo gerenciado pelo programa Solana (conta PDA)                          |
+| Governance Token | Token SPL que dá direito de voto proporcional ao volume de vendas                   |
+| Stake            | Depósito mínimo para entrar na DAO (10 USDC)                                        |
+| PDA              | Program Derived Address — conta controlada pelo programa, não por wallet privada    |
+| Anchor           | Framework Rust para desenvolvimento de programas Solana                             |
+| Squads Protocol  | Programa de multisig nativo Solana — execução trustless sem trusted party           |
+| Custodial Wallet | Wallet Solana criada e gerenciada pelo sistema em nome do fornecedor                |
+| Off-ramp         | Conversão de USDC para BRL via fintech (Brla Digital / Transfero) + Pix             |
+| Brla Digital     | Fintech brasileira que converte USDC para BRL via Pix na Solana                     |
+| Devnet           | Rede de testes da Solana (sem dinheiro real)                                        |
+| CPM              | Custo Por Mil impressões em mídia paga                                              |
+| KYC/AML          | Know Your Customer / Anti-Money Laundering — obrigação regulatória de identificação |
