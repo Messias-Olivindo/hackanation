@@ -1,0 +1,650 @@
+{
+  "version": "0.1.0",
+  "name": "seller_dao",
+  "instructions": [
+    {
+      "name": "joinDao",
+      "docs": [
+        "Instrução 1: Entrar na DAO",
+        "",
+        "O usuário deposita `stake_amount` tokens no treasury e recebe",
+        "governance tokens proporcionais (stake * 10). A DAO é inicializada",
+        "automaticamente na primeira chamada via init_if_needed.",
+        "",
+        "Parâmetros:",
+        "- `stake_amount`: Quantidade de tokens a depositar como stake (deve ser > 0)"
+      ],
+      "accounts": [
+        {
+          "name": "dao",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Conta global da DAO — inicializada na primeira chamada, reutilizada depois.",
+            "PDA seeds: [b\"dao\"]"
+          ]
+        },
+        {
+          "name": "member",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Conta do novo membro — criada nesta transação.",
+            "PDA seeds: [b\"member\", user.key()]"
+          ]
+        },
+        {
+          "name": "treasuryAuthority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "PDA de autoridade do treasury — usada como authority da ATA do treasury.",
+            "Não armazena dados, apenas serve como signer PDA para transferências."
+          ]
+        },
+        {
+          "name": "treasuryTokenAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Token account do treasury — ATA controlada pela treasury_authority PDA.",
+            "Inicializada automaticamente pelo Anchor na primeira chamada."
+          ]
+        },
+        {
+          "name": "userTokenAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Token account do usuário — de onde os tokens de stake serão transferidos.",
+            "Constraint: owner deve ser o user e mint deve corresponder."
+          ]
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Mint do token usado para stake (ex: USDC mint na devnet)"
+          ]
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Wallet do usuário que está entrando na DAO — paga as taxas de criação"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Programa SPL Token — necessário para a CPI de transferência"
+          ]
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Programa SPL Associated Token — necessário para criar ATAs"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System Program — necessário para criar contas PDA"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "stakeAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "propose",
+      "docs": [
+        "Instrução 2: Criar uma proposta",
+        "",
+        "Um membro cria uma proposta de uso dos fundos do treasury.",
+        "A proposta inicia uma janela de votação definida por VOTING_PERIOD_SECONDS.",
+        "",
+        "Parâmetros:",
+        "- `description`: Texto descritivo da proposta (max 280 chars)",
+        "- `target_amount`: Valor em tokens solicitado do treasury",
+        "- `recipient`: Pubkey da token account que receberá os fundos"
+      ],
+      "accounts": [
+        {
+          "name": "member",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Conta do membro que está criando a proposta.",
+            "Validação de ownership é feita na lógica da instrução (member.user == user.key)."
+          ]
+        },
+        {
+          "name": "dao",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Conta global da DAO — precisa ser mut para incrementar proposal_count.",
+            "PDA seeds: [b\"dao\"], bump validado pelo dao_bump armazenado."
+          ]
+        },
+        {
+          "name": "proposal",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Nova conta de proposta — criada nesta transação.",
+            "PDA seeds: [b\"proposal\", dao.key(), dao.proposal_count.to_le_bytes()]",
+            "O proposal_count atual é usado como seed para garantir unicidade."
+          ]
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Wallet do proponente — paga a criação da conta da proposta"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System Program — necessário para criar a conta PDA"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "targetAmount",
+          "type": "u64"
+        },
+        {
+          "name": "recipient",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "vote",
+      "docs": [
+        "Instrução 3: Votar em uma proposta",
+        "",
+        "O membro registra seu voto (a favor ou contra) com peso igual",
+        "aos seus governance tokens. Cada membro só pode votar uma vez",
+        "por proposta (garantido pela PDA do VoteRecord).",
+        "",
+        "Parâmetros:",
+        "- `proposal_id`: ID da proposta (não usado na lógica, mas parte da API)",
+        "- `approve`: true para votar a favor, false para votar contra"
+      ],
+      "accounts": [
+        {
+          "name": "member",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Conta do membro votante"
+          ]
+        },
+        {
+          "name": "proposal",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Conta da proposta sendo votada — mut para atualizar contadores de votos"
+          ]
+        },
+        {
+          "name": "dao",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Conta da DAO — read-only, usada para validação do bump"
+          ]
+        },
+        {
+          "name": "voteRecord",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Registro de voto — PDA única por (proposta, membro).",
+            "Se o membro já votou nesta proposta, o init falhará com",
+            "\"account already initialized\", impedindo voto duplo automaticamente.",
+            "PDA seeds: [b\"vote\", proposal.key(), member.key()]"
+          ]
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Wallet do votante — paga a criação do VoteRecord"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System Program — necessário para criar a conta PDA"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "proposalId",
+          "type": "u64"
+        },
+        {
+          "name": "approve",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "execute",
+      "docs": [
+        "Instrução 4: Executar uma proposta aprovada",
+        "",
+        "Após o período de votação encerrar, qualquer pessoa pode executar",
+        "uma proposta que tenha maioria de votos a favor. Os tokens são",
+        "transferidos do treasury para o destinatário via CPI com PDA signer.",
+        "",
+        "Parâmetros:",
+        "- `proposal_id`: ID da proposta (não usado na lógica, mas parte da API)"
+      ],
+      "accounts": [
+        {
+          "name": "proposal",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Conta da proposta — mut para marcar is_executed = true"
+          ]
+        },
+        {
+          "name": "dao",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Conta da DAO — read-only, usada para validar bumps e treasury_token_account"
+          ]
+        },
+        {
+          "name": "treasuryAuthority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "PDA de autoridade do treasury — atua como signer na CPI de transferência."
+          ]
+        },
+        {
+          "name": "treasuryTokenAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Token account do treasury — de onde os tokens serão transferidos.",
+            "Constraint: deve ser a mesma token account registrada na DAO."
+          ]
+        },
+        {
+          "name": "recipientTokenAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Token account do destinatário — para onde os tokens serão enviados.",
+            "Constraint: o mint deve corresponder ao mint do treasury."
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Programa SPL Token — necessário para a CPI de transferência"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "proposalId",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Dao",
+      "docs": [
+        "Conta principal da DAO — existe apenas uma instância por programa.",
+        "",
+        "PDA derivada com seeds: [b\"dao\"]",
+        "",
+        "Campos:",
+        "- `treasury_token_account`: Pubkey da ATA (Associated Token Account) do treasury.",
+        "Armazenada na criação para validação em transações futuras.",
+        "- `dao_bump`: Bump da PDA da DAO para re-derivação eficiente.",
+        "- `treasury_bump`: Bump da PDA de autoridade do treasury para assinaturas CPI.",
+        "- `total_members`: Contador de membros registrados na DAO.",
+        "- `proposal_count`: Contador sequencial de propostas criadas (usado como parte",
+        "da seed de cada proposta para garantir unicidade)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "treasuryTokenAccount",
+            "docs": [
+              "Endereço da token account do treasury (controlada pela PDA treasury_authority)"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "daoBump",
+            "docs": [
+              "Bump da PDA da DAO [b\"dao\"]"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "treasuryBump",
+            "docs": [
+              "Bump da PDA de autoridade do treasury [b\"treasury\"]"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "totalMembers",
+            "docs": [
+              "Número total de membros ativos na DAO"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "proposalCount",
+            "docs": [
+              "Contador sequencial de propostas (incrementado a cada nova proposta)"
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Member",
+      "docs": [
+        "Conta de membro da DAO — uma por usuário.",
+        "",
+        "PDA derivada com seeds: [b\"member\", user.key().as_ref()]",
+        "",
+        "Campos:",
+        "- `user`: Pubkey do wallet do membro (chave pública Solana).",
+        "- `stake`: Quantidade de tokens depositados como stake na entrada.",
+        "- `governance_tokens`: Tokens de governança recebidos (proporcional ao stake).",
+        "Determinam o peso do voto do membro nas propostas.",
+        "- `sales_volume`: Volume de vendas acumulado (para futuras distribuições por mérito).",
+        "- `bump`: Bump da PDA para re-derivação."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "docs": [
+              "Chave pública do wallet do membro"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "stake",
+            "docs": [
+              "Quantidade de tokens depositados como stake"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "governanceTokens",
+            "docs": [
+              "Governance tokens recebidos (peso do voto = governance_tokens)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "salesVolume",
+            "docs": [
+              "Volume de vendas acumulado do membro (reservado para uso futuro)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "Bump da PDA do membro"
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Proposal",
+      "docs": [
+        "Conta de proposta da DAO.",
+        "",
+        "PDA derivada com seeds: [b\"proposal\", dao.key(), proposal_count.to_le_bytes()]",
+        "",
+        "O campo `description` usa String com tamanho máximo definido por MAX_DESCRIPTION_LEN.",
+        "Anchor serializa Strings com um prefixo de 4 bytes para o comprimento,",
+        "por isso o cálculo de espaço inclui 4 + MAX_DESCRIPTION_LEN."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "proposer",
+            "docs": [
+              "Pubkey do membro que criou a proposta"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "proposalId",
+            "docs": [
+              "ID sequencial da proposta (baseado em dao.proposal_count no momento da criação)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "description",
+            "docs": [
+              "Descrição da proposta (max 280 caracteres, como um tweet)"
+            ],
+            "type": "string"
+          },
+          {
+            "name": "targetAmount",
+            "docs": [
+              "Valor em tokens que a proposta pede do treasury"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "recipient",
+            "docs": [
+              "Pubkey da token account que receberá os fundos se aprovada"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "votesFor",
+            "docs": [
+              "Total de votos a favor (ponderados por governance_tokens)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "votesAgainst",
+            "docs": [
+              "Total de votos contra (ponderados por governance_tokens)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "createdAt",
+            "docs": [
+              "Timestamp Unix da criação da proposta (usado para verificar janela de votação)"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "isExecuted",
+            "docs": [
+              "Flag indicando se a proposta já foi executada (impede execução duplicada)"
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "Bump da PDA da proposta"
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VoteRecord",
+      "docs": [
+        "Registro de voto de um membro em uma proposta específica.",
+        "",
+        "PDA derivada com seeds: [b\"vote\", proposal.key(), member.key()]",
+        "",
+        "A existência desta PDA é o mecanismo anti-voto-duplo:",
+        "se o membro tentar votar de novo, o `init` falhará porque",
+        "a conta PDA com essas seeds já existe."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "proposal",
+            "docs": [
+              "Pubkey da proposta votada"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "voter",
+            "docs": [
+              "Pubkey do wallet do votante"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "approve",
+            "docs": [
+              "true = a favor, false = contra"
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "weight",
+            "docs": [
+              "Peso do voto (= governance_tokens do membro no momento do voto)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "Bump da PDA do VoteRecord"
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "NotMember",
+      "msg": "User is not a member of the DAO"
+    },
+    {
+      "code": 6001,
+      "name": "ZeroStake",
+      "msg": "Stake amount must be greater than zero"
+    },
+    {
+      "code": 6002,
+      "name": "DescriptionTooLong",
+      "msg": "Proposal description too long"
+    },
+    {
+      "code": 6003,
+      "name": "ZeroTargetAmount",
+      "msg": "Proposal target amount must be greater than zero"
+    },
+    {
+      "code": 6004,
+      "name": "ProposalClosed",
+      "msg": "Proposal voting period has closed"
+    },
+    {
+      "code": 6005,
+      "name": "ProposalOpen",
+      "msg": "Proposal voting period is still open"
+    },
+    {
+      "code": 6006,
+      "name": "ProposalExecuted",
+      "msg": "Proposal has already been executed"
+    },
+    {
+      "code": 6007,
+      "name": "ProposalFailed",
+      "msg": "Proposal failed to achieve majority approval"
+    },
+    {
+      "code": 6008,
+      "name": "InsufficientTreasury",
+      "msg": "Treasury has insufficient balance"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidTreasuryAccount",
+      "msg": "Invalid treasury token account"
+    },
+    {
+      "code": 6010,
+      "name": "TreasuryMintMismatch",
+      "msg": "Treasury token mint mismatch"
+    },
+    {
+      "code": 6011,
+      "name": "InvalidRecipientTokenAccount",
+      "msg": "Recipient token account does not match proposal recipient"
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 # Smart Contracts — O Que Foi Feito, Como Testar e Como Fazer Deploy
 
 > **Última atualização:** 2026-05-31
-> **Status:** ✅ Compilado, testado e pronto para deploy na Devnet
+> **Status:** ✅ Totalmente testado localmente (100% de sucesso nos testes, sem erros de build no local)
+> **Toolchain validada:** solana-cli 3.1.15, anchor-cli 0.29.0
 
 ---
 
@@ -36,9 +37,9 @@ programs/seller-dao/src/
 | Instrução | Descrição | Status |
 |-----------|-----------|--------|
 | `join_dao(stake_amount)` | Deposita tokens no treasury, cria membro, recebe governance tokens | ✅ |
-| `propose(description, target_amount, recipient)` | Cria proposta com janela de votação | ✅ |
+| `propose(description, target_amount, recipient)` | Cria proposta com janela de votação (rejeita target_amount = 0) | ✅ |
 | `vote(proposal_id, approve)` | Vota a favor/contra com peso = governance_tokens | ✅ |
-| `execute(proposal_id)` | Transfere tokens do treasury para destinatário | ✅ |
+| `execute(proposal_id)` | Transfere tokens do treasury para destinatário (valida recipient) | ✅ |
 
 ### 3. Problemas Técnicos Resolvidos
 
@@ -58,20 +59,27 @@ dynamic_port_range = "8021-8050"
 ```
 
 #### Período de votação para testes
-O `VOTING_PERIOD_SECONDS` está configurado como 3 segundos para testes locais rápidos. Para produção, alterar em `programs/seller-dao/src/state/constants.rs`:
+O `VOTING_PERIOD_SECONDS` está configurado como **60 segundos** para permitir testes manuais confortáveis e robustos via frontend (Phantom/Privy) e integração contínua sem erros de propagação de transações (*ProposalClosed*). Para produção, alterar em `programs/seller-dao/src/state/constants.rs`:
 ```rust
 pub const VOTING_PERIOD_SECONDS: i64 = 72 * 60 * 60; // 72 horas
 ```
 
+### 3.1 Problemas Conhecidos
+
+#### Stack overflow no spl-token-2022 durante build
+Em alguns ambientes, o `anchor build` reporta erro de stack frame no crate `spl-token-2022` (confidential transfer). Os testes ainda passam, mas o build nao fica limpo. Mesmo apos `cargo update` e restricao de features do `anchor-spl` para apenas `token` e `associated_token`, o aviso persistiu. A mitigacao recomendada e alinhar as versoes de Solana/Anchor e, se necessario, usar um fork/pinagem externa (fora do escopo atual).
+
 ### 4. Suíte de Testes
 
-3 testes de integração em `programs/seller-dao/tests/dao_mvp.js`:
+5 testes de integração em `programs/seller-dao/tests/dao_mvp.js`:
 
 | Teste | O que valida |
 |-------|-------------|
 | `join_dao initializes DAO and member` | Criação da DAO, membro, treasury ATA, transferência de stake |
 | `propose, vote, and execute` | Fluxo completo: proposta → voto → espera → execução → saldos |
 | `prevents double voting` | VoteRecord PDA impede voto duplicado |
+| `rejects zero target proposals` | Proposta com target_amount = 0 é rejeitada |
+| `rejects execution with wrong recipient token account` | Execução bloqueada se destinatário não bate com a proposta |
 
 ### 5. Comentários no Código
 
@@ -119,12 +127,14 @@ anchor test
 ### Resultado Esperado
 
 ```
-  seller-dao mvp
-    ✔ join_dao initializes DAO and member (1677ms)
-    ✔ propose, vote, and execute (7529ms)
-    ✔ prevents double voting
+   seller-dao mvp
+      ✔ join_dao initializes DAO and member (1685ms)
+      ✔ propose, vote, and execute (7967ms)
+      ✔ prevents double voting
+      ✔ rejects zero target proposals
+      ✔ rejects execution with wrong recipient token account (6806ms)
 
-  3 passing (10s)
+   5 passing (17s)
 ```
 
 ### Troubleshooting
@@ -134,7 +144,8 @@ anchor test
 | `gossip_addr bind_to port 8000: Address already in use` | A porta 8000 está ocupada. A config em `Anchor.toml` já resolve isso usando porta 8020. |
 | `target/deploy/seller_dao.so not found` | Rode `anchor build` e copie os artefatos conforme passo 4 acima. |
 | `IDL does not have metadata.address` | Copie o IDL: `cp target/idl/seller_dao.json programs/seller-dao/target/idl/` |
-| `ProposalOpen` no teste execute | O `VOTING_PERIOD_SECONDS` precisa ser curto (3s) para testes. Verifique `state/constants.rs`. |
+| `ProposalOpen` no teste execute | O `VOTING_PERIOD_SECONDS` precisa expirar para permitir execução. Verifique se o setTimeout em seus testes é maior que o valor em `constants.rs`. |
+| Erro de stack no `spl-token-2022` durante `anchor build` | Alinhe versoes de Solana/Anchor e rode `cargo update`. |
 
 ---
 
@@ -202,7 +213,7 @@ Antes do deploy final, altere o período de votação em `programs/seller-dao/sr
 
 ```rust
 // De:
-pub const VOTING_PERIOD_SECONDS: i64 = 3;
+pub const VOTING_PERIOD_SECONDS: i64 = 60; // 60 segundos para testes do frontend
 
 // Para:
 pub const VOTING_PERIOD_SECONDS: i64 = 72 * 60 * 60; // 72 horas

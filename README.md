@@ -32,6 +32,13 @@ Seller entra → deposita stake (10 USDC) → recebe governance tokens
 
 ---
 
+## 🔗 Deploy do Smart Contract (Solana Devnet)
+
+* **Program ID do Smart Contract:** [`FPezMd8XbqDEYXsDgqRW7bpGQ6HDdnjnzMbKpNMjcPkL`](https://explorer.solana.com/address/FPezMd8XbqDEYXsDgqRW7bpGQ6HDdnjnzMbKpNMjcPkL?cluster=devnet)
+* **Token de Governança (Mint):** [`DPd4G6RYKrmYKnYTjRRhpJhR45JJjs1mXnkoXibbd5Sg`](https://explorer.solana.com/address/DPd4G6RYKrmYKnYTjRRhpJhR45JJjs1mXnkoXibbd5Sg?cluster=devnet)
+
+---
+
 ## Impacto Projetado (100 sellers médios)
 
 | Métrica | Resultado |

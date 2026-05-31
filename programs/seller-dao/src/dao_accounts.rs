@@ -248,6 +248,8 @@ pub struct Execute<'info> {
     /// Constraint: o mint deve corresponder ao mint do treasury.
     #[account(
         mut,
+        constraint = recipient_token_account.key() == proposal.recipient
+            @ DaoError::InvalidRecipientTokenAccount,
         constraint = recipient_token_account.mint == treasury_token_account.mint
             @ DaoError::TreasuryMintMismatch
     )]
