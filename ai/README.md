@@ -25,6 +25,7 @@ This directory contains all documentation, specifications, and references for th
 - [Hackathon Details](documentation/hackathon-details.md) - Submission requirements
 - [Solution Documentation](documentation/solution-documentation.md) - Full solution document
 - [Payment Flow Validation](documentation/payment-flow-validated.md) - Onboarding and payment flow validation
+- [Smart Contracts Guide](documentation/smart-contracts-guide.md) - **O que foi feito, como testar e como fazer deploy**
 
 ### Specifications
 
@@ -42,6 +43,8 @@ This directory contains all documentation, specifications, and references for th
 ### Plans
 
 - [Project Fronts Plan](plans/process-project-fronts-1.md) - Development plan for all work fronts
+- [Anchor MVP Plan](plans/process-anchor-mvp-devnet-2.md) - Anchor program compile-test-fix loop (Phases 1-4 ✅, Phase 5 pending)
+- [MVP Tests & Deploy Plan](plans/process-mvp-tests-devnet-1.md) - Testing and devnet deployment (Phases 1-4 ✅, Phase 5 pending)
 
 ### Version History
 

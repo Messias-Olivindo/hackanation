@@ -1,6 +1,5 @@
-[program]
-name = "seller_dao"
-features = ["no-entrypoint"]
+[workspace]
+members = ["programs/seller-dao"]
 
 [programs.localnet]
 seller_dao = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
@@ -13,7 +12,10 @@ cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
-test = "npm test"
+test = "npm test --prefix programs/seller-dao"
+
+[toolchain]
+anchor_version = "0.29.0"
 
 [test.validator]
 bind_address = "127.0.0.1"
