@@ -77,6 +77,60 @@ A organização do código reflete a separação de responsabilidades entre gove
 
 ---
 
+## 🚀 Como Rodar e Executar o Projeto
+
+O repositório é composto por dois módulos principais: os **smart contracts (on-chain)** desenvolvidos em Rust/Anchor e o **frontend interativo (off-chain)** desenvolvido em Next.js.
+
+### 1. Pré-requisitos
+Certifique-se de possuir instalado em sua máquina:
+*   [Node.js](https://nodejs.org/) (v18.x ou superior)
+*   [Rust & Cargo](https://www.rust-lang.org/tools/install)
+*   [Solana CLI](https://docs.solanalabs.com/cli/install) (v1.18 ou superior)
+*   [Anchor Framework](https://www.anchor-lang.com/docs/installation) (v0.29.0)
+
+---
+
+### 2. Executando os Smart Contracts (On-chain)
+
+A partir da raiz do repositório, você pode compilar e testar os contratos on-chain:
+
+1. **Instalar dependências e compilar os contratos:**
+   ```bash
+   anchor build
+   ```
+
+2. **Executar a suíte de testes automatizados:**
+   Roda o validador local de Solana e executa os testes automatizados do Mocha presentes na pasta `/tests`:
+   ```bash
+   anchor test
+   ```
+
+---
+
+### 3. Executando a Interface Web (Off-chain)
+
+Para rodar o frontend Next.js localmente:
+
+1. **Navegar para a pasta do frontend:**
+   ```bash
+   cd app
+   ```
+
+2. **Instalar as dependências do Node.js:**
+   ```bash
+   npm install
+   ```
+
+3. **Iniciar o servidor de desenvolvimento local:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Acessar a aplicação:**
+   Abra seu navegador em [http://localhost:3000](http://localhost:3000) para interagir com o painel de governança e a simulação de faturamento.
+
+---
+
 ## ⚖️ Licença
 
 Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
