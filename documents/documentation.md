@@ -325,6 +325,28 @@ Validação técnica e de valor com 10 a 20 sellers selecionados. O piloto é co
 ## Fase 3 — Expansão (Mês 6 em diante):  
 Com casos reais documentados, o crescimento passa a ser impulsionado por community-led growth (OPENVIEW, 2021)  depoimentos, indicações entre sellers e conteúdo baseado em evidências de economia gerada. Em paralelo, a integração com novos marketplaces como Shopee e TikTok Shop é iniciada de forma gradual, replicando o modelo técnico e operacional validado nas fases anteriores e ampliando o alcance da DAO para sellers de outras plataformas.
 
+
+## 2.4. Benchmark e Posicionamento Competitivo
+
+O mercado em que a SellerDAO se insere é composto por três blocos de soluções que atacam partes do problema enfrentado por pequenos sellers de marketplaces: grupos de compra e cooperativas, fintechs e soluções financeiras para sellers, e DAOs e tesourarias coletivas em Web3. Nenhum desses blocos, isoladamente, entrega a combinação que a SellerDAO propõe, poder de compra coletivo, financiamento, governança compartilhada e execução automática on-chain focada em sellers de marketplace.
+
+A tabela a seguir sintetiza as principais características de cada bloco e o posicionamento da SellerDAO frente a eles:
+
+| Critério | GPOs e Cooperativas | Fintechs e Marketplaces | DAOs Web3 | **SellerDAO** |
+|---|---|---|---|---|
+| Poder de compra coletivo | ✅ | ❌ | ❌ | ✅ |
+| Foco em sellers de marketplace | ⚠️ Parcial | ✅ | ❌ | ✅ |
+| Crédito e capital de giro | ❌ | ✅ | ❌ | ✅ (fase futura) |
+| Tesouraria coletiva on-chain | ❌ | ❌ | ✅ | ✅ |
+| Governança pelos próprios sellers | ❌ | ❌ | ✅ | ✅ |
+| Integração com APIs de marketplaces | ❌ | ✅ | ❌ | ✅ |
+| Abstração de blockchain para o usuário | ❌ | ❌ | ❌ | ✅ |
+| Transparência de caixa auditável | ❌ | ❌ | ✅ | ✅ |
+
+A SellerDAO se posiciona como uma camada de infraestrutura financeira coletiva que nenhum dos três blocos existentes cobre integralmente: resolve o mesmo problema de escala das cooperativas, mas com tesouraria programável e governança granular; acessa os dados de faturamento dos marketplaces como as fintechs, mas com o capital pertencendo e sendo gerido pelos próprios sellers; e utiliza a estrutura de DAO e execução on-chain do ecossistema Web3, mas aplicada a um problema concreto do e-commerce tradicional, com abstração total da camada cripto para o usuário final.
+
+---
+
 ---
 # 3. Produto
 
