@@ -20,7 +20,7 @@ Nenhum desses problemas tem solução individual. São todos, por definição, p
 ## 1.2. Solução Proposta
 &ensp; A SellerDAO é uma infraestrutura financeira coletiva para sellers de marketplace, como Mercado Livre, Shopee, TikTok Shop e etc, construída sobre a Solana.
 
-&ensp; A ideia central é permitir que sellers contribuam com um percentual do seu faturamento <strong>validado</strong> para um treasury compartilhado, votem em como usar esse capital, e o smart contract executa automaticamente. Ninguém irá armazenar o dinheiro ou distribuir os pagamentos, o código é o responsável. Enquanto isso, pequenos vendedores aumentam seu poder de barganha/negociação com os fornecedores e diminuem o custo de produção e distribuição dos produtos.
+&ensp; A ideia central é permitir que sellers contribuam com um percentual do seu faturamento <strong>validado</strong> para um treasury compartilhado, votem em como usar esse capital, e o programa executa automaticamente. Ninguém irá armazenar o dinheiro ou distribuir os pagamentos, o código é o responsável. Enquanto isso, pequenos vendedores aumentam seu poder de barganha/negociação com os fornecedores e diminuem o custo de produção e distribuição dos produtos.
 
 ### 1.2.1. Como funciona na prática:
 
@@ -38,7 +38,7 @@ Treasury Solana
 ↓
 Votação on-chain → execução automática
 
-&ensp; O treasury acumula o capital e qualquer membro pode propor um uso, seja uma compra coletiva de estoque, contratação de creator para live no TikTok Shop, campanha de mídia em bloco, empréstimo interno para capital de giro. A proposta fica aberta 72 horas para votação. Aprovada, o smart contract executa sem intermediário.
+&ensp; O treasury acumula o capital e qualquer membro pode propor um uso, seja uma compra coletiva de estoque, contratação de creator para live no TikTok Shop, campanha de mídia em bloco, empréstimo interno para capital de giro. A proposta fica aberta 72 horas para votação. Aprovada, o programa executa sem intermediário.
 
 ### 1.2.2. Por que Solana?
 
@@ -103,7 +103,7 @@ Trata-se de um risco de natureza técnica e de negócio. Sua probabilidade de oc
 ---
 
 
-### Risco de Bug em Smart Contract
+### Risco de Bug em Programas Solana (Smart Contracts)
 
 
 Trata-se de um risco de natureza de segurança. Sua probabilidade de ocorrência foi estimada em 30%, pois depende fortemente da qualidade do desenvolvimento, mas vulnerabilidades em contratos on-chain, mesmo sutis, são um vetor de risco clássico e amplamente documentado no ecossistema DeFi: foram registrados US$ 1,42 bilhão em perdas em 149 incidentes documentados somente em 2024, com falhas de controle de acesso respondendo por US$ 953,2 milhões desse total (OWASP FOUNDATION, 2025). O impacto foi classificado como crítico porque, caso esse risco se concretize, fundos em USDC podem ser perdidos de forma definitiva ou a tesouraria pode ser travada sem possibilidade de recuperação, inviabilizando toda a operação da DAO. A combinação desses fatores resulta em uma classificação geral alta a crítica, tornando este o risco de maior severidade potencial do projeto. Como plano de ação, a equipe deve utilizar ao máximo componentes já testados e auditados do ecossistema Solana, como Anchor, SPL Tokens e Squads, implementar spending limits e time locks para transações de alto valor e, assim que houver versão estável, realizar uma revisão externa do código por parceiros ou pela comunidade.
@@ -275,7 +275,7 @@ Trata-se de uma oportunidade de natureza tecnológica e de produto. Sua probabil
 ### Oportunidade de Comunidade com Governança Real sobre Capital Coletivo
 
 
-Trata-se de uma oportunidade de natureza organizacional e de comunidade. Sua probabilidade de ocorrência foi estimada em 70%, pois a substituição de associações informais baseadas em confiança interpessoal por regras explícitas de governança, votações transparentes e execução automática via smart contracts resolve um problema estrutural real citado na problemática do projeto — a vulnerabilidade de grupos de compra informais a golpes e má gestão. O impacto foi classificado como alto porque, caso essa oportunidade se concretize, a SellerDAO pode criar uma comunidade de sellers genuinamente engajada, com senso de ownership sobre o capital coletivo e confiança na imparcialidade das decisões, o que é um ativo intangível de altíssimo valor para a sustentabilidade de longo prazo da DAO. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve comunicar ativamente, nas apresentações e materiais de onboarding, a diferença entre a governança on-chain da SellerDAO e os grupos informais de compra coletiva, reforçando a transparência e a auditabilidade como diferenciais centrais.
+Trata-se de uma oportunidade de natureza organizacional e de comunidade. Sua probabilidade de ocorrência foi estimada em 70%, pois a substituição de associações informais baseadas em confiança interpessoal por regras explícitas de governança, votações transparentes e execução automática via programas Solana (smart contracts) resolve um problema estrutural real citado na problemática do projeto — a vulnerabilidade de grupos de compra informais a golpes e má gestão. O impacto foi classificado como alto porque, caso essa oportunidade se concretize, a SellerDAO pode criar uma comunidade de sellers genuinamente engajada, com senso de ownership sobre o capital coletivo e confiança na imparcialidade das decisões, o que é um ativo intangível de altíssimo valor para a sustentabilidade de longo prazo da DAO. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve comunicar ativamente, nas apresentações e materiais de onboarding, a diferença entre a governança on-chain da SellerDAO e os grupos informais de compra coletiva, reforçando a transparência e a auditabilidade como diferenciais centrais.
 
 
 ---
@@ -334,7 +334,7 @@ Com casos reais documentados, o crescimento passa a ser impulsionado por communi
 
 # 4. Arquitetura Técnica
 
-&ensp; Esta seção apresenta a arquitetura técnica da plataforma SellerDAO, organizada nas subsecções previstas: visão geral da arquitetura, stack tecnológico, lógica das smart contracts, limitações do MVP e o fluxo de pagamento off-chain.
+&ensp; Esta seção apresenta a arquitetura técnica da plataforma SellerDAO, organizada nas subsecções previstas: visão geral da arquitetura, stack tecnológico, lógica dos programas Solana, limitações do MVP e o fluxo de pagamento off-chain.
 
 &ensp; O objetivo é mostrar como os componentes se conectam e se comunicam, separando com clareza o que roda **on-chain** — governança, treasury e execução automática de decisões coletivas — do que roda **off-chain** — interfaces de usuário, integrações com marketplaces e compliance financeiro. Essa separação é intencional: o on-chain concentra tudo o que precisa ser imutável e auditável; o off-chain cuida do que exige flexibilidade, adaptação regulatória e integração com o mundo real.
 
@@ -342,9 +342,9 @@ Com casos reais documentados, o crescimento passa a ser impulsionado por communi
 
 &ensp; A arquitetura da SellerDAO é organizada em três camadas que se comunicam em sequência: **interface**, **execução on-chain** e **orquestração off-chain**. Cada camada tem responsabilidades bem delimitadas, o que facilita tanto o desenvolvimento quanto a auditoria do sistema.
 
-&ensp; A **camada de interface** é o que o seller vê e usa — o dashboard web onde ele conecta sua carteira, acompanha o saldo do treasury, cria propostas, vota e monitora execuções. Toda ação iniciada aqui se transforma em uma instrução enviada para o contrato inteligente na Solana.
+&ensp; A **camada de interface** é o que o seller vê e usa — o dashboard web onde ele conecta sua carteira, acompanha o saldo do treasury, cria propostas, vota e monitora execuções. Toda ação iniciada aqui se transforma em uma instrução enviada para o programa Solana.
 
-&ensp; A **camada on-chain** é o núcleo da SellerDAO. É onde o dinheiro coletivo fica guardado, onde os votos são registrados de forma permanente e onde as decisões aprovadas são executadas automaticamente. Nenhuma pessoa tem acesso direto ao treasury: o próprio contrato é o guardião. Tudo o que acontece aqui é público, verificável no Solana Explorer em tempo real e impossível de ser alterado retroativamente.
+&ensp; A **camada on-chain** é o núcleo da SellerDAO. É onde o dinheiro coletivo fica guardado, onde os votos são registrados de forma permanente e onde as decisões aprovadas são executadas automaticamente. Nenhuma pessoa tem acesso direto ao treasury: o próprio programa é o guardião. Tudo o que acontece aqui é público, verificável no Solana Explorer em tempo real e impossível de ser alterado retroativamente.
 
 &ensp; A **camada off-chain** é onde acontece a ponte com o mundo real — validação de faturamento dos sellers via APIs de marketplace, integração com provedores de pagamento para converter USDC em Pix, gestão de compliance (KYC/AML) e processamento assíncrono de eventos. No MVP do hackathon, essa camada é simulada: os dados de vendas são inseridos manualmente e o fluxo de pagamento é demonstrado como hipótese técnica. Na versão de mercado, ela se torna essencial para a operação real da DAO.
 
@@ -379,9 +379,9 @@ Com casos reais documentados, o crescimento passa a ser impulsionado por communi
 
 &ensp; Vale destacar três escolhas com impacto direto na viabilidade da proposta. O **Anchor** reduz drasticamente a complexidade de desenvolvimento em Rust para Solana — sem ele, construir as quatro instruções do contrato em 48 horas de hackathon seria inviável. O **Squads Protocol** resolve o problema de custódia do treasury sem exigir que nenhum membro individual seja confiável: o dinheiro só se move quando o threshold de assinaturas for atingido, e isso é garantido pelo código, não por acordos verbais. Por fim, a escolha de **USDC nativo na Solana** — emitido diretamente pela Circle na rede — elimina a necessidade de bridges entre blockchains, simplificando o fluxo e reduzindo pontos de falha.
 
-## 4.3. Lógica das Smart Contracts
+## 4.3. Lógica dos Programas Solana
 
-&ensp; O contrato inteligente da SellerDAO — escrito em Rust com o framework Anchor — concentra toda a lógica crítica da plataforma: quem pode participar, como as decisões são tomadas, e sob quais condições o dinheiro se move. É ele que torna a DAO verdadeiramente trustless: nenhuma regra de negócio relevante depende de uma pessoa honesta no caminho.
+&ensp; O programa da SellerDAO — escrito em Rust com o framework Anchor — concentra toda a lógica crítica da plataforma: quem pode participar, como as decisões são tomadas, e sob quais condições o dinheiro se move. Ele é o que torna a DAO verdadeiramente trustless: nenhuma regra de negócio relevante depende de uma pessoa honesta no caminho.
 
 &ensp; A lógica on-chain é organizada em quatro instruções principais, alinhadas ao ciclo de vida da governança. Essa separação reduz acoplamento entre os módulos, facilita auditoria independente e permite que o contrato evolua sem quebrar as funcionalidades existentes.
 
@@ -471,3 +471,23 @@ Com casos reais documentados, o crescimento passa a ser impulsionado por communi
 &ensp; No MVP do hackathon, ambos os provedores são representados como simulação no frontend, sem integração ativa nem uso de chaves privadas ou dados sensíveis. O fluxo completo será implementado na versão de produto, após validação técnica e assinatura dos contratos de parceria.
 
 # 5. Conclusão
+
+&ensp; A **SellerDAO** redefine a governança comunitária e o poder de mercado para pequenos e médios vendedores de e-commerce brasileiros. Ao substituir os riscos e as margens ineficientes das associações informais por um programa descentralizado e transparente na Solana, eliminamos a necessidade de confiança cega em terceiros, reduzimos drasticamente os custos operacionais e aumentamos o poder de barganha coletiva na compra de estoque, creator pools e mídia em bloco. A combinação de liquidez veloz, transações baratas da Solana e fluxos de pagamentos Pix fluidos demonstra que a tecnologia Web3 pode resolver problemas estruturais e reais da economia produtiva nacional. O sucesso do MVP estabelece as bases tecnológicas sólidas para que a cooperação digital descentralizada se torne um motor real de sustentabilidade, autonomia e competitividade para o varejo digital no Brasil.
+
+---
+
+# 6. Cronograma de Desenvolvimento (Roadmap)
+
+&ensp; Este cronograma apresenta a evolução planejada para a plataforma SellerDAO, partindo das validações do MVP e projetando sua expansão operacional no mercado brasileiro em três fases consecutivas.
+
+### 6.1. Fase 1: MVP do Hackathon (Validação Técnica)
+
+&ensp; Esta fase foca na validação da infraestrutura tecnológica central do projeto. Compreende a implantação estável do programa Solana na rede de testes (Devnet), garantindo a custódia do tesouro on-chain e os fluxos de governança comunitária. O frontend Next.js foi estruturado de forma isolada na pasta `app/`, centralizando a lógica de PDAs e comunicação via IDL. As integrações com marketplaces e a liquidação off-ramp via Pix operam em ambiente de simulação conceitual robusta.
+
+### 6.2. Fase 2: Beta Fechado (Piloto Operacional)
+
+&ensp; Previsão de transição das simulações para testes em ambiente real com um grupo controlado de 100 vendedores parceiros. O objetivo central é integrar as APIs oficiais do Mercado Livre e Shopee para automação das taxas de contribuição de faturamento. Adicionalmente, será iniciado o piloto de pagamentos de saída (off-ramp) via Pix integrado a parceiros regulados de câmbio, permitindo a liquidação direta em reais na conta bancária empresarial do fornecedor.
+
+### 6.3. Fase 3: Escala e Conformidade Regulatória
+
+&ensp; Visa a escalabilidade do modelo no mercado nacional e a consolidação de sua segurança jurídica. A prioridade é o registro da entidade operadora como Provedora de Serviços de Ativos Virtuais (PSAV) no Banco Central do Brasil. Tecnologicamente, esta fase automatizará os Creator Pools (TikTok Shop) com divisão de receitas on-chain via programa, além de ofertar linhas de crédito internas baseadas na reputação comercial construída pelos sellers na DAO.
