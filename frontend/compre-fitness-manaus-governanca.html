@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Compre Fitness Manaus — Governança</title>
+<link rel="stylesheet" href="app.css" />
+<style>
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tab { display: inline-flex; align-items: center; gap: 8px; font: 600 0.875rem/1 var(--font-sans); color: var(--fg-secondary); background: #fff; border: 1px solid var(--border); padding: 10px 15px; border-radius: var(--radius-pill); cursor: pointer; transition: all var(--dur) var(--ease); }
+  .tab:hover { border-color: var(--green-300); }
+  .tab.active { background: var(--green-950); color: var(--fg-on-dark); border-color: transparent; }
+  .tab .cnt { font: var(--text-mono); font-size: 0.72rem; padding: 2px 7px; border-radius: var(--radius-pill); background: var(--bg-muted); color: var(--fg-tertiary); }
+  .tab.active .cnt { background: rgba(255,255,255,0.15); color: var(--green-300); }
+
+  .plist { display: flex; flex-direction: column; gap: var(--space-5); }
+  .prop { padding: var(--space-6); }
+  .prop-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .prop-top .id { font: var(--text-mono); font-size: 0.78rem; color: var(--fg-tertiary); }
+  .prop-top .spacer { flex: 1; }
+  .prop-top .time { font: var(--text-caption); color: var(--warning-fg); display: inline-flex; align-items: center; gap: 5px; }
+  .prop h3 { font: var(--text-h4); margin-bottom: 7px; letter-spacing: -0.01em; }
+  .prop .desc { font: var(--text-small); color: var(--fg-secondary); max-width: 64ch; }
+  .prop-meta { display: flex; gap: 14px 32px; flex-wrap: wrap; margin: 16px 0 18px; padding: 14px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .prop-meta .m { min-width: 120px; }
+  .prop-meta .m .k { font: var(--text-overline); letter-spacing: var(--tracking-overline); text-transform: uppercase; color: var(--fg-tertiary); white-space: nowrap; }
+  .prop-meta .m .v { font: 700 0.95rem/1 var(--font-sans); margin-top: 6px; display: flex; align-items: center; gap: 7px; }
+  .prop-meta .m .v.mono { font: var(--text-mono); font-weight: 500; color: var(--chain); }
+  .prop-meta .m .v .av { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 700 0.62rem/1 var(--font-sans); color: var(--fg-on-green); }
+  .prop-meta .m .amt { font-feature-settings: 'tnum' 1; }
+  .prop-meta .m .amt small { font: var(--text-mono); font-size: 0.72rem; color: var(--brand-strong); font-weight: 500; }
+
+  .votes { display: flex; flex-direction: column; gap: 11px; }
+  .vline .top { display: flex; justify-content: space-between; font: 600 0.82rem/1 var(--font-sans); margin-bottom: 7px; }
+  .vline .top .pct { font-family: var(--font-mono); color: var(--fg-secondary); }
+  .vline .vbar { height: 9px; border-radius: var(--radius-pill); background: var(--bg-muted); overflow: hidden; }
+  .vline .vbar > i { display: block; height: 100%; border-radius: var(--radius-pill); transition: width var(--dur-slow) var(--ease); }
+  .quorum { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; font: var(--text-small); color: var(--fg-tertiary); }
+  .quorum .ok { color: var(--success-fg); font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+
+  .prop-foot { display: flex; align-items: center; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
+  .voted-tag { display: inline-flex; align-items: center; gap: 7px; font: 600 0.85rem/1 var(--font-sans); color: var(--brand-strong); }
+  .exec-strip { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; background: var(--surface-green); border-radius: var(--radius-md); padding: 13px 16px; margin-top: 18px; }
+  .exec-strip .ic { width: 30px; height: 30px; border-radius: 50%; background: var(--brand); display: grid; place-items: center; flex: none; }
+  .exec-strip .ic svg { width: 16px; height: 16px; color: #fff; }
+  .exec-strip .tt { font: 600 0.85rem/1.3 var(--font-sans); color: var(--green-900); }
+  .exec-strip .tt small { display: block; font: var(--text-small); font-weight: 400; color: var(--brand-strong); margin-top: 3px; }
+  .exec-strip .hash { margin-left: auto; font: var(--text-mono); font-size: 0.74rem; color: var(--chain-accent); text-decoration: none; white-space: nowrap; }
+  .rej-strip { background: var(--danger-bg); border-radius: var(--radius-md); padding: 12px 16px; margin-top: 18px; font: var(--text-small); color: var(--danger-fg); }
+
+  /* toast */
+  .toast-wrap { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 200; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .toast { display: flex; align-items: center; gap: 11px; background: var(--green-950); color: #fff; padding: 13px 18px; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); font: 600 0.875rem/1.3 var(--font-sans); opacity: 0; transform: translateY(12px); transition: all var(--dur) var(--ease); max-width: 90vw; }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--green-500); display: grid; place-items: center; flex: none; }
+  .toast .dot svg { width: 13px; height: 13px; color: var(--green-950); }
+  .toast small { display: block; font-weight: 400; font-size: 0.78rem; color: var(--green-300); margin-top: 3px; font-family: var(--font-mono); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="side">
+    <div class="side-brand">
+      <div class="mono-mark">CF</div>
+      <div class="nm">Compre Fitness<br/>Manaus<small>DAO · 47 sellers</small></div>
+    </div>
+    <nav class="side-nav">
+      <div class="lab">Organização</div>
+      <a class="side-link" href="compre-fitness-manaus-painel.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Painel
+      </a>
+      <a class="side-link active" href="compre-fitness-manaus-governanca.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Governança
+      </a>
+      <a class="side-link" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M16 12h.01M2 10h20"/></svg>Tesouraria (em breve)
+      </a>
+      <a class="side-link" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 14c2.7 0 5 2 5 5"/></svg>Membros (em breve)
+      </a>
+    </nav>
+    <div class="side-foot">
+      <div class="side-treasury">
+        <div class="k">Treasury coletivo</div>
+        <div class="v">24.680 <small>USDC</small></div>
+        <div class="sub">≈ R$ 133,3 mil · on-chain</div>
+      </div>
+      <div class="side-user">
+        <div class="av">JV</div>
+        <div class="who">João Victor<small>peso 120 · 1,5% do faturamento</small></div>
+      </div>
+      <div class="poweredby">
+        <svg viewBox="0 0 100 100"><defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#07F2B0"/><stop offset="1" stop-color="#06BF8B"/></linearGradient></defs><path d="M75.98 65 A30 30 0 1 1 75.98 35" fill="none" stroke="url(#pg)" stroke-width="13" stroke-linecap="round"/><rect x="48" y="43" width="30" height="13" rx="6.5" fill="url(#pg)"/><circle cx="20" cy="50" r="7" fill="url(#pg)"/><circle cx="76" cy="50" r="7" fill="url(#pg)"/></svg>
+        Powered by Guild
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+    <header class="topbar">
+      <div class="crumb">
+        <div class="t">Governança</div>
+        <div class="s">Votação on-chain de 72h · peso proporcional à contribuição de cada seller</div>
+      </div>
+      <div class="actions">
+        <span class="chain-pill"><span class="d"></span>Solana · Devnet</span>
+        <button class="btn btn--primary" id="openProp">
+          <svg class="btn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          Nova proposta
+        </button>
+      </div>
+    </header>
+
+    <div class="page">
+      <div class="tabs" id="tabs"></div>
+      <div class="plist" id="plist"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: NOVA PROPOSTA ============ -->
+<div class="modal-scrim" id="scrim">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <div>
+        <div class="t">Abrir nova proposta</div>
+        <div class="s">Será registrada on-chain e aberta para votação por 72h.</div>
+      </div>
+      <button class="modal-x" id="closeProp" aria-label="Fechar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Categoria</label>
+        <div class="choice-row">
+          <label class="choice"><input type="radio" name="cat" value="estoque" checked /><span class="box">Estoque</span></label>
+          <label class="choice"><input type="radio" name="cat" value="creators" /><span class="box">Creators</span></label>
+          <label class="choice"><input type="radio" name="cat" value="midia" /><span class="box">Mídia</span></label>
+          <label class="choice"><input type="radio" name="cat" value="credito" /><span class="box">Crédito</span></label>
+          <label class="choice"><input type="radio" name="cat" value="frete" /><span class="box">Frete</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Título da proposta</label>
+        <div class="ctrl"><input type="text" id="f-title" placeholder="Ex.: Compra coletiva de 1.000kg de poliamida" /></div>
+      </div>
+      <div class="field">
+        <label>Descrição</label>
+        <div class="ctrl area"><textarea id="f-desc" placeholder="Explique o fornecedor, o benefício para o coletivo e como o rateio será feito."></textarea></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1.3fr;gap:14px">
+        <div class="field">
+          <label>Valor do treasury</label>
+          <div class="ctrl"><span class="pre">USDC</span><input type="text" id="f-amount" placeholder="9.600" /></div>
+        </div>
+        <div class="field">
+          <label>Carteira do destinatário</label>
+          <div class="ctrl"><span class="pre">◎</span><input type="text" id="f-wallet" placeholder="Malhas do Sul · custodial" /></div>
+          <div class="hint">Fornecedor recebe via Pix — wallet custodial gerada pelo sistema.</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn--ghost" id="cancelProp" style="margin-left:auto">Cancelar</button>
+      <button class="btn btn--primary" id="submitProp">
+        <svg class="btn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        Abrir proposta on-chain
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toasts"></div>
+
+<script src="governanca.js"></script>
+</body>
+</html>

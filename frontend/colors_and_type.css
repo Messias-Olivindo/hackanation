@@ -1,0 +1,196 @@
+/* ============================================================
+   GUILD — Design Tokens
+   Infraestrutura financeira coletiva para sellers (Solana)
+   Superfície clara · verde de marca como acento · tom acolhedor
+   ============================================================ */
+
+/* ---- Fonts (Google Fonts) ---- */
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ========================================================
+     COLOR — Brand green scale (derivada do print)
+     ======================================================== */
+  --green-50:  #E9FBF3;
+  --green-100: #C7F6E2;
+  --green-200: #96D9C0; /* print */
+  --green-300: #5BE8BE;
+  --green-400: #07F2B0; /* print — mint pop */
+  --green-500: #07D99D; /* print — secundária */
+  --green-600: #06BF8B; /* print — PRIMÁRIA da marca */
+  --green-700: #059B72;
+  --green-800: #047855;
+  --green-900: #0A3D2E;
+  --green-950: #06251C; /* ink verde profundo (seções escuras) */
+
+  /* ========================================================
+     COLOR — Neutros (levíssimo tom verde para harmonia)
+     ======================================================== */
+  --neutral-0:   #FFFFFF;
+  --neutral-25:  #FAFCFB;
+  --neutral-50:  #F5F8F7;
+  --neutral-100: #EDF2F0;
+  --neutral-200: #E4EAE8;
+  --neutral-300: #CFD9D5;
+  --neutral-400: #A7B4AF;
+  --neutral-500: #76847E;
+  --neutral-600: #46554F;
+  --neutral-700: #2C3A34;
+  --neutral-800: #18241F;
+  --neutral-900: #0B211A;
+  --gray-flat:   #D9D9D9; /* print — divisores neutros / disabled */
+
+  /* ========================================================
+     COLOR — Papéis semânticos (use estes nas interfaces)
+     ======================================================== */
+  /* Superfícies */
+  --bg:            var(--neutral-0);
+  --bg-subtle:     var(--neutral-50);
+  --bg-muted:      var(--neutral-100);
+  --surface-card:  var(--neutral-0);
+  --surface-green: var(--green-50);
+  --surface-dark:  var(--green-950);
+
+  /* Texto */
+  --fg:            var(--neutral-900);
+  --fg-secondary:  var(--neutral-600);
+  --fg-tertiary:   var(--neutral-500);
+  --fg-on-green:   #042A20;  /* texto sobre verde vibrante */
+  --fg-on-dark:    #DFF5EC;  /* texto sobre superfície escura */
+  --fg-inverse:    var(--neutral-0);
+
+  /* Marca / ação */
+  --brand:          var(--green-600);
+  --brand-strong:   var(--green-700);
+  --brand-bright:   var(--green-500);
+  --brand-ink:      var(--green-900);
+  --accent-on-brand: var(--fg-on-green);
+
+  /* Bordas e linhas */
+  --border:        var(--neutral-200);
+  --border-strong: var(--neutral-300);
+  --border-brand:  var(--green-300);
+  --divider:       var(--gray-flat);
+
+  /* Foco / seleção */
+  --focus-ring:    color-mix(in srgb, var(--green-500) 55%, transparent);
+
+  /* ========================================================
+     COLOR — Estados / feedback
+     ======================================================== */
+  --success:       #06BF8B;
+  --success-bg:    #E9FBF3;
+  --success-fg:    #04785A;
+
+  --warning:       #D98A00;
+  --warning-bg:    #FBF1DC;
+  --warning-fg:    #8A5A00;
+
+  --danger:        #E5484D;
+  --danger-bg:     #FCE9E9;
+  --danger-fg:     #B42A2F;
+
+  --info:          #2D7FF9;
+  --info-bg:       #E6EFFE;
+  --info-fg:       #1B5FCB;
+
+  /* On-chain / dado técnico (camada mono) */
+  --chain:         #0A3D2E;
+  --chain-bg:      #ECF6F1;
+  --chain-accent:  var(--green-600);
+
+  /* ========================================================
+     TYPOGRAPHY
+     ======================================================== */
+  --font-sans: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Escala (superfície clara, tom humanista) */
+  --text-display-xl: 700 4rem/1.02 var(--font-sans);   /* 64 */
+  --text-display:    800 3rem/1.05 var(--font-sans);   /* 48 */
+  --text-h1:         800 2.25rem/1.1 var(--font-sans); /* 36 */
+  --text-h2:         700 1.75rem/1.15 var(--font-sans);/* 28 */
+  --text-h3:         700 1.375rem/1.25 var(--font-sans);/* 22 */
+  --text-h4:         600 1.125rem/1.3 var(--font-sans);/* 18 */
+  --text-body-lg:    400 1.125rem/1.6 var(--font-sans);/* 18 */
+  --text-body:       400 1rem/1.6 var(--font-sans);    /* 16 */
+  --text-small:      400 0.875rem/1.5 var(--font-sans);/* 14 */
+  --text-caption:    500 0.8125rem/1.45 var(--font-sans);/* 13 */
+  --text-mono:       500 0.875rem/1.5 var(--font-mono);/* 14 dados */
+  --text-overline:   600 0.75rem/1 var(--font-sans);   /* 12 caixa-alta */
+
+  --tracking-tight:   -0.02em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.02em;
+  --tracking-overline: 0.12em;
+
+  /* ========================================================
+     SPACING (base 4px)
+     ======================================================== */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ========================================================
+     RADIUS
+     ======================================================== */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* ========================================================
+     SHADOWS / ELEVATION (sutis, tonalizadas de verde)
+     ======================================================== */
+  --shadow-xs: 0 1px 2px rgba(11, 33, 26, 0.05);
+  --shadow-sm: 0 2px 6px rgba(11, 33, 26, 0.06);
+  --shadow-md: 0 6px 18px rgba(11, 33, 26, 0.08);
+  --shadow-lg: 0 16px 40px rgba(11, 33, 26, 0.10);
+  --shadow-brand: 0 10px 28px rgba(6, 191, 139, 0.28);
+  --shadow-focus: 0 0 0 4px var(--focus-ring);
+
+  /* ========================================================
+     GRADIENTS (logo + destaques)
+     ======================================================== */
+  --gradient-brand: linear-gradient(135deg, var(--green-400) 0%, var(--green-600) 100%);
+  --gradient-brand-soft: linear-gradient(135deg, var(--green-300) 0%, var(--green-500) 100%);
+  --gradient-dark: linear-gradient(160deg, #0A3D2E 0%, #06251C 100%);
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur: 200ms;
+  --dur-slow: 320ms;
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT DEFAULTS
+   ============================================================ */
+.gd-display-xl { font: var(--text-display-xl); letter-spacing: var(--tracking-tight); color: var(--fg); }
+.gd-display    { font: var(--text-display); letter-spacing: var(--tracking-tight); color: var(--fg); }
+.gd-h1 { font: var(--text-h1); letter-spacing: var(--tracking-tight); color: var(--fg); }
+.gd-h2 { font: var(--text-h2); letter-spacing: var(--tracking-tight); color: var(--fg); }
+.gd-h3 { font: var(--text-h3); color: var(--fg); }
+.gd-h4 { font: var(--text-h4); color: var(--fg); }
+.gd-body-lg { font: var(--text-body-lg); color: var(--fg-secondary); }
+.gd-body { font: var(--text-body); color: var(--fg-secondary); }
+.gd-small { font: var(--text-small); color: var(--fg-tertiary); }
+.gd-mono { font: var(--text-mono); color: var(--chain); font-feature-settings: 'tnum' 1; }
+.gd-overline {
+  font: var(--text-overline);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
