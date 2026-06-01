@@ -76,3 +76,5 @@ coverage/
 
 # AI Private Docs (Notas privadas do desenvolvedor no hub de IA)
 ai/private/
+ai/
+.claude/

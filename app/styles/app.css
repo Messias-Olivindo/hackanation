@@ -2,7 +2,7 @@
    GUILD — App shell + componentes (whitelabel)
    Importa os tokens do design system.
    ============================================================ */
-@import url('colors_and_type.css');
+@import './colors_and_type.css';
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }

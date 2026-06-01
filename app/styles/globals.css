@@ -1,20 +1,76 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @theme {
-  --color-brand-dark: #0a0a14;
-  --color-brand-card: #111120;
-  --color-brand-border: #1e1e35;
-  --color-brand-purple: #9945FF;
-  --color-brand-green: #14F195;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --color-green-50: #E9FBF3;
+  --color-green-100: #C7F6E2;
+  --color-green-200: #96D9C0;
+  --color-green-300: #5BE8BE;
+  --color-green-400: #07F2B0;
+  --color-green-500: #07D99D;
+  --color-green-600: #06BF8B;
+  --color-green-700: #059B72;
+  --color-green-800: #047855;
+  --color-green-900: #0A3D2E;
+  --color-green-950: #06251C;
+
+  --color-neutral-0: #FFFFFF;
+  --color-neutral-25: #FAFCFB;
+  --color-neutral-50: #F5F8F7;
+  --color-neutral-100: #EDF2F0;
+  --color-neutral-200: #E4EAE8;
+  --color-neutral-300: #CFD9D5;
+  --color-neutral-400: #A7B4AF;
+  --color-neutral-500: #76847E;
+  --color-neutral-600: #46554F;
+  --color-neutral-700: #2C3A34;
+  --color-neutral-800: #18241F;
+  --color-neutral-900: #0B211A;
+
+  --color-brand: #06BF8B;
+  --color-brand-strong: #059B72;
+  --color-brand-bright: #07D99D;
+  --color-brand-ink: #0A3D2E;
+
+  --color-danger: #E5484D;
+  --color-danger-bg: #FCE9E9;
+  --color-danger-fg: #B42A2F;
+
+  --color-warning: #D98A00;
+  --color-warning-bg: #FBF1DC;
+  --color-warning-fg: #8A5A00;
+
+  --color-success: #06BF8B;
+  --color-success-bg: #E9FBF3;
+  --color-success-fg: #04785A;
+
+  --color-info: #2D7FF9;
+  --color-info-bg: #E6EFFE;
+  --color-info-fg: #1B5FCB;
+
+  --font-sans: "Hanken Grotesk", Inter, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", Menlo, monospace;
+
+  --shadow-brand: 0 10px 28px rgba(6, 191, 139, 0.28);
+  --shadow-xs: 0 1px 2px rgba(11, 33, 26, 0.05);
+  --shadow-sm: 0 2px 6px rgba(11, 33, 26, 0.06);
+  --shadow-md: 0 6px 18px rgba(11, 33, 26, 0.08);
+  --shadow-lg: 0 16px 40px rgba(11, 33, 26, 0.10);
+
+  --background-image-gradient-brand: linear-gradient(135deg, #07F2B0 0%, #06BF8B 100%);
+  --background-image-gradient-brand-soft: linear-gradient(135deg, #5BE8BE 0%, #07D99D 100%);
+  --background-image-gradient-dark: linear-gradient(160deg, #0A3D2E 0%, #06251C 100%);
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
 }
 
 @layer base {
   body {
-    background-color: #0a0a14;
-    color: white;
-    -webkit-font-smoothing: antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--color-neutral-50) !important;
+    color: var(--color-neutral-900) !important;
+    font-family: var(--font-sans) !important;
   }
 }

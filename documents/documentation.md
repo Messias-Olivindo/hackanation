@@ -6,7 +6,34 @@
 - [Messias Olivindo](https://www.linkedin.com/in/messias-olivindo/)
 
 ## Sumário
-<!-- Em breve -->
+
+1. [1. Visão Geral](#1-visão-geral)
+   * 1.1. [Problemática](#11-problemática)
+   * 1.2. [Solução Proposta](#12-solução-proposta)
+     * 1.2.1. [Como funciona na prática](#121-como-funciona-na-prática)
+     * 1.2.2. [Por que Solana?](#122-por-que-solana)
+     * 1.2.3. [Como funciona para o recebedor](#123-como-funciona-para-o-recebedor)
+   * 1.3. [Value Proposition Canvas](#13-value-proposition-canvas)
+2. [2. Análises de Mercado](#2-análises-de-mercado)
+   * 2.1. [Matriz de Riscos](#21-matriz-de-riscos)
+   * 2.2. [Matriz de Oportunidades](#212-matriz-de-oportunidades)
+   * 2.3. [Modelo de 5 Forças de Porter](#22-modelo-de-5-forças-de-porter-sellerdao)
+   * 2.4. [Estratégias de Inserção (Go-to-Market)](#23-estratégias-de-inserção-no-mercado-go-to-market-da-sellerdao)
+   * 2.5. [Benchmark e Posicionamento Competitivo](#24-benchmark-e-posicionamento-competitivo)
+   * 2.6. [Análise de Retorno sobre Investimento (ROI Y1)](#25-análise-de-retorno-sobre-investimento-roi-y1)
+3. [3. Produto](#3-produto)
+   * 3.1. [Personas](#31-personas)
+   * 3.2. [Interface e Front-end (UX)](#32-interface-e-front-end)
+4. [4. Arquitetura Técnica](#4-arquitetura-técnica)
+   * 4.1. [Visão Geral da Arquitetura](#41-visão-geral-da-arquitetura)
+   * 4.2. [Stack Tecnológico](#42-stack-tecnológico)
+   * 4.3. [Lógica dos Programas Solana](#43-lógica-dos-programas-solana)
+   * 4.4. [Limitações do MVP e Escopo](#44-limitações-do-mvp-e-escopo)
+   * 4.5. [Fluxo de Pagamento Off-chain](#45-fluxo-de-pagamento-off-chain)
+5. [5. Conclusão](#5-conclusão)
+6. [6. Cronograma de Desenvolvimento (Roadmap)](#6-cronograma-de-desenvolvimento-roadmap)
+
+---
 
 # 1. Visão Geral
 ## 1.1. Problemática
@@ -72,132 +99,94 @@ Votação on-chain → execução automática
 
 ## 2.1. Matriz de Riscos
 
-A Matriz de Riscos é uma ferramenta visual utilizada para priorizar os riscos de um projeto com base em duas dimensões: probabilidade, que mede a chance de um risco ocorrer, e impacto, que representa suas consequências caso se concretize (PROJECT MANAGEMENT INSTITUTE, 2017). A combinação dessas dimensões gera uma classificação geral — alta, média ou baixa — representada por cores, facilitando o foco da equipe nos riscos mais críticos e orientando a construção de planos de ação preventivos. No contexto deste projeto, a matriz foi aplicada para avaliar os riscos do desenvolvimento da plataforma da SellerDAO, considerando desde vulnerabilidades técnicas e desafios de governança até exposições regulatórias inerentes ao modelo de negócio proposto. Segue o nosso modelo:
-
-
-<div align="center">
-<p>Figura 2 – Matriz de riscos.</p>
-<img src="./assets/matrizDeRiscos.png" alt="Matriz de riscos da SellerDAO">
-<p>Fonte: Próprios autores (2026).</p>
-</div>
-
+A Matriz de Riscos é uma ferramenta visual utilizada para priorizar os riscos de um projeto com base em duas dimensões: probabilidade, que mede a chance de um risco ocorrer, e impacto, que representa suas consequências caso se concretize (PROJECT MANAGEMENT INSTITUTE, 2017). A combinação dessas dimensões gera uma classificação geral — alta, média ou baixa — representada por cores, facilitando o foco da equipe nos riscos mais críticos e orientando a construção de planos de ação preventivos. No contexto deste projeto, a matriz foi aplicada para avaliar os riscos do desenvolvimento da plataforma da SellerDAO, considerando desde vulnerabilidades técnicas e desafios de governança até exposições regulatórias inerentes ao modelo de neg### Risco de Erro no Oráculo Próprio (Backend → Solana)
+*   **Natureza**: Técnica.
+*   **Probabilidade / Impacto**: 50% (Média) / Alto.
+*   **Plano de Ação**: Implementar testes automatizados periódicos comparando dados off-chain e on-chain, simplificar snapshots mensais agregados no MVP e adotar fluxo formal de reconciliação de divergências via governança.
 
 ---
-
-
-### Risco de Erro no Oráculo Próprio (Backend → Solana)
-
-
-Trata-se de um risco de natureza técnica. Sua probabilidade de ocorrência foi estimada em 50%, pois, por não se tratar de um serviço padronizado de terceiros, a implementação está mais sujeita a bugs, falhas de sincronização ou divergências entre os dados off-chain (APIs dos marketplaces) e os snapshots on-chain. O impacto foi classificado como alto porque, caso esse risco se concretize, o cálculo de contribuição dos sellers pode ser comprometido, gerando cobranças injustas, contestações e perda de confiança na plataforma. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve implementar testes automatizados periódicos que comparam dados off-chain e on-chain, iniciar com snapshots mensais mais agregados para reduzir complexidade e definir um processo formal de reconciliação e correção via proposta de governança sempre que uma divergência for detectada.
-
-
----
-
 
 ### Risco de Dependência das APIs de Marketplaces
-
-
-Trata-se de um risco de natureza técnica e de negócio. Sua probabilidade de ocorrência foi estimada em 50%, pois mudanças de política, revisão de credenciais ou limites de requisições por parte dos marketplaces são eventos plausíveis ao longo do ciclo de vida do produto. O impacto foi classificado como alto porque, caso esse risco se concretize, a SellerDAO perde a capacidade de validar automaticamente o faturamento, travando o cálculo de contribuição e, consequentemente, as operações de governança que dependem dessas informações. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve focar o MVP em no máximo dois marketplaces com APIs mais estáveis, construir uma camada de abstração de integrações no backend, isolando cada API em módulos independentes, e prever um "modo degradado" que suspende propostas dependentes de faturamento atualizado enquanto a integração estiver indisponível.
-
+*   **Natureza**: Técnica e Negócio.
+*   **Probabilidade / Impacto**: 50% (Média) / Alto (Travamento de validações automáticas).
+*   **Plano de Ação**: Concentrar o MVP nas duas APIs mais consolidadas (Mercado Livre e Shopee), construir uma camada de abstração modular no backend e programar "modo degradado" que suspende temporariamente ações afetadas se a API falhar.
 
 ---
-
 
 ### Risco de Bug em Programas Solana (Smart Contracts)
-
-
-Trata-se de um risco de natureza de segurança. Sua probabilidade de ocorrência foi estimada em 30%, pois depende fortemente da qualidade do desenvolvimento, mas vulnerabilidades em contratos on-chain, mesmo sutis, são um vetor de risco clássico e amplamente documentado no ecossistema DeFi: foram registrados US$ 1,42 bilhão em perdas em 149 incidentes documentados somente em 2024, com falhas de controle de acesso respondendo por US$ 953,2 milhões desse total (OWASP FOUNDATION, 2025). O impacto foi classificado como crítico porque, caso esse risco se concretize, fundos em USDC podem ser perdidos de forma definitiva ou a tesouraria pode ser travada sem possibilidade de recuperação, inviabilizando toda a operação da DAO. A combinação desses fatores resulta em uma classificação geral alta a crítica, tornando este o risco de maior severidade potencial do projeto. Como plano de ação, a equipe deve utilizar ao máximo componentes já testados e auditados do ecossistema Solana, como Anchor, SPL Tokens e Squads, implementar spending limits e time locks para transações de alto valor e, assim que houver versão estável, realizar uma revisão externa do código por parceiros ou pela comunidade.
-
+*   **Natureza**: Segurança.
+*   **Probabilidade / Impacto**: 30% (Baixa) / Crítico (Perda definitiva ou travamento de fundos).
+*   **Plano de Ação**: Usar exclusivamente primitivas de mercado exaustivamente testadas (Anchor Framework, SPL Tokens e Squads Protocol), implementar spending limits e time locks para grandes volumes e conduzir auditoria/revisão externa comunitária.
 
 ---
-
 
 ### Risco de Configuração Inadequada do Multisig Squads
-
-
-Trata-se de um risco de natureza de segurança e governança. Sua probabilidade de ocorrência foi estimada em 50%, pois a definição correta do threshold de aprovação e da composição de signers é altamente sensível ao contexto e está sujeita a erros de calibração na fase inicial. O impacto foi classificado como alto porque, caso esse risco se concretize, um threshold baixo demais permite que poucos signers capturem a tesouraria, enquanto um threshold alto demais pode travar a DAO se signers ficarem inativos, em ambos os cenários, a integridade operacional e financeira da organização é comprometida. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve iniciar com um conjunto misto de signers, time core mais sellers representativos, definir regras de rotação periódica, utilizar spending limits e time locks para saídas de grande valor e documentar formalmente os critérios de escolha e substituição de signers na própria governança da DAO.
-
+*   **Natureza**: Segurança e Governança.
+*   **Probabilidade / Impacto**: 50% (Média) / Alto (Risco de paralisia ou tomada unilateral).
+*   **Plano de Ação**: Iniciar com threshold calibrado com signers mistos (membros core e representantes influentes de sellers), planejar rotação de chaves periódica e impor travas temporais (time locks) para saídas financeiras substanciais.
 
 ---
-
 
 ### Risco de Enquadramento como VASP sem Licença
-
-
-Trata-se de um risco de natureza regulatória. Sua probabilidade de ocorrência foi estimada em 50%, pois o modelo da SellerDAO, que envolve custódia coletiva de USDC, contribuições financeiras e execução de pagamentos, pode ser interpretado como atividade de VASP. A Lei 14.478/2022, em vigor desde agosto de 2023, estabeleceu o marco legal para prestadores de serviços de ativos virtuais no Brasil, e em 2025 o Banco Central assumiu formalmente a supervisão das corretoras de criptomoedas, tornando o cenário regulatório progressivamente mais exigente (O MUNICÍPIO, 2026). O impacto foi classificado como alto a crítico porque, caso esse risco se concretize, a pessoa jurídica representante pode ser obrigada a interromper operações, obter autorização específica do Bacen ou reestruturar completamente o modelo de negócio. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve documentar explicitamente que a implementação real exigirá parecer jurídico especializado e adequação à Lei 14.478/2022, e estruturar o modelo para que conversões entre BRL e USDC sejam realizadas por parceiros financeiros já licenciados, reduzindo o escopo regulatório da PJ.
-
+*   **Natureza**: Regulação.
+*   **Probabilidade / Impacto**: 50% (Média) / Alto a Crítico (Sanções administrativas).
+*   **Plano de Ação**: Terceirizar a custódia, o on-ramp e o off-ramp (BRL ↔ USDC) para processadores de pagamento licenciados (MoonPay, SmartPay), restringindo a PJ da DAO apenas ao escopo de tecnologia e orquestração.
 
 ---
-
 
 ### Risco de KYC/AML Insuficiente
-
-
-Trata-se de um risco de natureza regulatória e reputacional. Sua probabilidade de ocorrência foi estimada em 30%, pois a intenção declarada de realizar um KYC elaborado reduz o risco, mas não o elimina, falhas de processo, fornecedores inadequados ou ausência de monitoramento transacional contínuo podem deixar brechas relevantes. Em 2025, o Banco Central intensificou a exigência de identificação obrigatória de usuários e regras reforçadas de prevenção à lavagem de dinheiro para todo o setor de ativos virtuais (O MUNICÍPIO, 2026). O impacto foi classificado como alto porque, caso esse risco se concretize, a DAO pode ser utilizada para movimentação indevida de recursos, atraindo sanções regulatórias, responsabilidade criminal para os administradores e dano irreparável à reputação da plataforma. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve adotar processos formais de KYC/KYB com CNPJ, documentos societários e screening em listas de sanções, utilizando provedores especializados; implementar monitoramento transacional básico para detectar padrões atípicos; e garantir que operações de conversão fiat-cripto sejam feitas exclusivamente por instituições já reguladas.
-
+*   **Natureza**: Regulação e Reputação.
+*   **Probabilidade / Impacto**: 30% (Baixa) / Alto (Facilitação involuntária de crimes financeiros).
+*   **Plano de Ação**: Implementar onboarding formal por provedores de KYC/KYB especialistas (validando dados de CNPJ e quadros societários), impor limites de transações suspeitas e operar exclusivamente com gateways regulados no off-ramp.
 
 ---
-
 
 ### Risco de Conflito com o Código de Defesa do Consumidor
-
-
-Trata-se de um risco de natureza regulatória. Sua probabilidade de ocorrência foi estimada em 30%, pois, embora a SellerDAO opere em modelo B2B com sellers pessoas jurídicas, parte dos participantes pode ser enquadrada como consumidor vulnerável dependendo do contexto e do entendimento do regulador. O impacto foi classificado como moderado a alto porque, caso esse risco se concretize, a SellerDAO pode ser responsabilizada por falta de transparência nas taxas, ausência de informações sobre riscos ou assimetria contratual, gerando litígios e obrigações de adequação. A combinação desses fatores resulta em uma classificação geral média. Como plano de ação, a equipe deve desenvolver termos de uso claros e acessíveis, além de materiais educativos que expliquem os riscos e o caráter coletivo e de autogovernança da DAO, sem qualquer promessa ou garantia de retorno financeiro.
-
+*   **Natureza**: Regulação.
+*   **Probabilidade / Impacto**: 30% (Baixa) / Moderado (Classificação inadequada como relação de consumo).
+*   **Plano de Ação**: Desenvolver termos de uso B2B claros e transparentes reafirmando o caráter cooperativista corporativo de autogovernança da DAO, eliminando promessas de retorno ou tratamento asimétrico.
 
 ---
-
 
 ### Risco de Concentração de Poder de Voto
-
-
-Trata-se de um risco de natureza de governança. Sua probabilidade de ocorrência foi estimada em 70%, pois, sem mecanismos de limitação, a concentração de poder de voto nos sellers de maior faturamento é quase inevitável em DAOs com voto proporcional puro. Dados mostram que apenas 1% dos detentores de tokens concentrava 90% do poder de voto em 10 grandes projetos de DAO analisados (CHAINALYSIS apud BERAVOTE, 2023), evidenciando como esse desequilíbrio é estrutural e não excepcional. A SellerDAO, por atender sellers com faturamentos muito heterogêneos, está especialmente exposta a essa dinâmica. O impacto foi classificado como alto porque, caso esse risco se concretize, decisões estratégicas da DAO podem ser capturadas por um grupo pequeno de sellers grandes, marginalizando os menores e subvertendo a proposta de infraestrutura financeira coletiva e equitativa. A combinação desses fatores resulta em uma classificação geral alta, tornando este um dos riscos mais estruturais do projeto. Como plano de ação, a equipe deve estabelecer desde o início um limite máximo de poder de voto por entidade, explorar modelos híbridos de câmaras separadas para decisões de diferentes naturezas e prever mecanismo de revisão periódica das regras de governança via proposta da própria comunidade.
-
+*   **Natureza**: Governança.
+*   **Probabilidade / Impacto**: 70% (Alta) / Alto (Dominação por sellers gigantes).
+*   **Plano de Ação**: Impor limite máximo de peso de voto por CNPJ na governança on-chain, incentivar o uso de modelos híbridos/câmaras geográficas e revisar periodicamente as regras de proporcionalidade por votações coletivas.
 
 ---
-
 
 ### Risco de Baixa Participação em Votações (Apathy Risk)
-
-
-Trata-se de um risco de natureza de governança e operacional. Sua probabilidade de ocorrência foi estimada em 70%, pois sellers de marketplace são empreendedores com alta demanda operacional no dia a dia, tornando improvável que a maioria se engaje ativamente em votações de governança de forma contínua. Esse fenômeno é amplamente documentado: em média, menos de 10% dos detentores de tokens participam de votações relevantes nas DAOs (BERAVOTE, 2024), e em casos como o Uniswap, uma das maiores DAOs do mundo, a taxa média de participação registrada foi de apenas 0,33% dos elegíveis (LIU, 2023). Baixa participação e fadiga de governança têm levado à centralização das decisões nas mãos de poucos participantes altamente ativos (ÖZDEMIR et al. apud FRONTIERS IN BLOCKCHAIN, 2025). O impacto foi classificado como moderado a alto porque, caso esse risco se concretize, a legitimidade das decisões da DAO fica comprometida, aumentando o risco de captura por minoria e de desengajamento progressivo da comunidade. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve definir quórum mínimo por tipo de decisão, criar incentivos de participação, como benefícios extras para membros engajados, e investir em uma UX simples de votação com notificações por e-mail e WhatsApp.
-
+*   **Natureza**: Governança e Operação.
+*   **Probabilidade / Impacto**: 70% (Alta) / Moderado a Alto (Falta de quórum ou fadiga).
+*   **Plano de Ação**: Definir quóruns mínimos de votação realistas e escalonados conforme o valor, disparar alertas reativos via canais operacionais do lojista (e-mail, WhatsApp) e prover incentivos de reputação na plataforma.
 
 ---
-
 
 ### Risco de Critérios de Reembolso Pouco Definidos
-
-
-Trata-se de um risco de natureza de governança e jurídica. Sua probabilidade de ocorrência foi estimada em 50%, pois, sem critérios claros e formalizados para quando e como o reembolso é possível, a DAO fica exposta a demandas inconsistentes, conflitos internos e à percepção de que a tesouraria funciona como uma "seguradora informal". O impacto foi classificado como alto porque, caso esse risco se concretize, a credibilidade da governança da DAO pode ser severamente abalada, e decisões tomadas de forma casuística podem criar precedentes prejudiciais ao funcionamento sustentável da comunidade. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve especificar no regulamento interno os casos em que o reembolso é elegível, como fraude comprovada ou não entrega documentada, e os casos em que não é, além de exigir contratos ou termos mínimos entre a DAO e fornecedores e creators para embasar qualquer decisão de reembolso.
-
+*   **Natureza**: Governança e Jurídica.
+*   **Probabilidade / Impacto**: 50% (Média) / Alto (Perda de integridade da tesouraria).
+*   **Plano de Ação**: Estruturar regulamento restritivo sobre casos elegíveis a reembolso (como fraudes de fornecedores validadas), exigindo contratos e termos assinados entre a DAO e terceiros para fundamentar disputas.
 
 ---
-
 
 ### Risco de Barreira no Onboarding via USDC
-
-
-Trata-se de um risco de natureza de produto e operacional. Sua probabilidade de ocorrência foi estimada em 70%, pois a maioria dos pequenos sellers de marketplaces brasileiros ainda tem baixa exposição a ativos digitais, tornando o processo de onboarding com USDC e carteiras cripto uma barreira real de adoção. Segundo pesquisa do Sebrae, 2/3 dos pequenos negócios brasileiros concentram-se entre os níveis baixo e médio de maturidade digital, e os MEIs puxam a média nacional para baixo (SEBRAE, 2024), evidenciando que o público-alvo da SellerDAO ainda está longe da familiaridade necessária para operar diretamente com ativos on-chain. O impacto foi classificado como moderado a alto porque, caso esse risco se concretize, a base de sellers elegíveis fica artificialmente reduzida, comprometendo a escala necessária para que os ganhos de poder de barganha e tesouraria coletiva se materializem. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, o MVP deve assumir explicitamente que o foco inicial são sellers com maior maturidade digital, enquanto a visão de longo prazo inclui integração com fintechs que abstraiam a conversão BRL para USDC, além de materiais educativos simples que guiem os primeiros participantes no passo a passo de entrada na plataforma.
-
+*   **Natureza**: Produto e Operação.
+*   **Probabilidade / Impacto**: 70% (Alta) / Moderado a Alto (Adoção inicial travada).
+*   **Plano de Ação**: Concentrar o piloto inicial em sellers com maior maturidade digital e, progressivamente, integrar wallets embutidas sem atrito (Privy/MPC) e fluxos onde o BRL Pix é convertido em USDC nos bastidores de forma invisível.
 
 ---
-
 
 ### Risco de Modelo de Receita e Sustentabilidade Indefinidos
-
-
-Trata-se de um risco de natureza de negócio. Sua probabilidade de ocorrência foi estimada em 70%, pois, em estágio de MVP e hackathon, é natural que o foco esteja na validação do valor entregue aos sellers, deixando a monetização para fases posteriores, o que mantém o risco de sustentabilidade financeira da operação em aberto por mais tempo. O impacto foi classificado como moderado a alto porque, caso esse risco se concretize, a DAO pode crescer em tesouraria coletiva mas não ter recursos suficientes para manter a equipe de operação, resultando em degradação do produto e abandono da plataforma. A combinação desses fatores resulta em uma classificação geral média a alta. Como plano de ação, a equipe deve documentar explicitamente que o MVP tem como objetivo validar valor para os sellers, e que o modelo de monetização, como uma pequena taxa sobre operações aprovadas, será testado em fases posteriores, separando desde já a tesouraria da comunidade da tesouraria operacional da PJ.
-
+*   **Natureza**: Negócio.
+*   **Probabilidade / Impacto**: 70% (Alta) / Moderado a Alto (Inviabilidade operacional da plataforma).
+*   **Plano de Ação**: Definir e testar modelos de sustentabilidade viáveis (como uma pequena taxa percentual sobre transações coletivas executadas no treasury) para blindar a sustentação técnica e operacional da plataforma.
 
 ---
 
-
 ### Risco de Gestão de Dados Sensíveis e LGPD
-
-
-Trata-se de um risco de natureza operacional e regulatória. Sua probabilidade de ocorrência foi estimada em 50%, pois falhas de segurança, vazamentos ou tratamento inadequado de dados pessoais são riscos presentes em qualquer plataforma que lida com informações financeiras e documentos de identificação de sellers. O impacto foi classificado como alto porque, caso esse risco se concretize, a SellerDAO pode enfrentar sanções da ANPD, ações judiciais de sellers afetados e perda de confiança irreparável na plataforma. A combinação desses fatores resulta em uma classificação geral alta. Como plano de ação, a equipe deve minimizar os dados armazenados ao estritamente necessário, utilizar criptografia em repouso e em trânsito, definir uma política clara de retenção e descarte de dados e aplicar anonimização sempre que possível nos dados utilizados para análise e governança.
-
+*   **Natureza**: Operação e Regulação.
+*   **Probabilidade / Impacto**: 50% (Média) / Alto (Vazamento de dados corporativos ou fiscais).
+*   **Plano de Ação**: Minimizar a retenção de dados sensíveis ao estritamente necessário no backend, empregar criptografia em repouso e trânsito, e implementar anonimização em relatórios e logs transacionais.
 
 ---
 
@@ -446,7 +435,43 @@ Mesmo no cenário pessimista, o ROI Y1 permanece positivo, indicando que o model
 
 ## 3.1. Personas
 
+&ensp; Para fundamentar o desenvolvimento da **Guild**, foram mapeadas duas personas principais que representam as dores reais do pequeno varejista de e-commerce brasileiro atuando sob o isolamento de margens:
+
+### Persona 1: Roberto, 34 anos (Manaus, AM) — Proprietário da "Norte Power Nutrition"
+*   **Perfil**: Vendedor de suplementos e acessórios de treino de médio porte no Mercado Livre e Shopee.
+*   **Problema**: Por atuar isolado geograficamente em Manaus, Roberto sofre com o alto custo de frete na importação de insumos e no envio de produtos. Ao tentar adquirir lotes mínimos de garrafas térmicas de alumínio direto de indústrias locais, bate em barreiras de pedido mínimo (ex: R$ 15.000).
+*   **Necessidade**: Unir seu poder de compra a outros sellers locais para destravar lotes de atacado direto de fábricas e distribuidores parceiros da Zona Franca de Manaus, mantendo suas margens competitivas frente aos sellers da região Sudeste.
+
+### Persona 2: Ana, 28 anos (Tarumã, AM) — Criadora da "Serrana Moda Fitness"
+*   **Perfil**: Vendedora e fabricante de confecções esportivas (leggings e tops) com foco em canais de mídia próprios e canais digitais.
+*   **Problema**: Gostaria de patrocinar influenciadores regionais (*creator pools*) e campanhas unificadas de tráfego pago para aumentar a tração de suas vendas, porém uma campanha minimamente relevante custa R$ 5.000 por semana — valor proibitivo para seu fluxo de caixa individual.
+*   **Necessidade**: Uma plataforma transparente que rateie o custo de campanhas de mídia e tráfego local proporcionalmente entre sellers do mesmo nicho geográfico, direcionando compradores para os sellers conforme a proximidade logística do frete.
+
+---
+
 ## 3.2. Interface e front-end
+
+&ensp; A interface do usuário da **Guild** foi projetada com base nas melhores práticas de design digital moderno, focada na clareza operacional para o seller de marketplace que não possui conhecimento profundo em Web3.
+
+### Diretrizes de UX e Design System:
+*   **Visual Premium Off-White**: O fundo da aplicação utiliza uma cor suave Off-White (`#F5F8F7` / `bg-neutral-50`) que reduz o cansaço visual e transmite um ar institucional premium e limpo.
+*   **Verde Floresta Escandinavo**: Os menus laterais e cabeçalhos principais utilizam cores escuras profundas (`#06251C` e `#0A3D2E`), gerando um excelente constraste de profundidade.
+*   **Destaque Neon-Mint**: Botões de ação, quórum, andamento de metas e sinalizadores de sucesso adotam o tom verde brilhante e vivo (`#06BF8B` e `#07F2B0`), direcionando a atenção imediata do usuário às zonas interativas.
+*   **Hanken Grotesk & JetBrains Mono**: Tipografia moderna para leitura fluida de textos corporativos associada a fontes mono-espaçadas nas seções de dados on-chain, transações e hashes de transação criptográfica.
+
+### Telas e Jornada do Usuário:
+1.  **Landing Page (`/`)**: Apresenta a tese inovadora da Guild com a provocação central: *"Imagina pagar mais caro só porque você ainda é pequeno"*. Demonstra um comparativo visual claro da tesouraria coletiva contra compras isoladas de estoque.
+2.  **Dashboard / Painel (`/painel`)**: Exibe KPIs consolidados da DAO (saldo do treasury, taxa de economia global, quantidade de membros e contribuição estimada). Contém um controle deslizante de contribuição interativo onde o seller ajusta sua taxa de repasse sobre vendas (de 1% a 5%) e visualiza graficamente o crescimento de sua participação e peso de voto on-chain em tempo real.
+3.  **Painel de Governança (`/governanca`)**: Permite acompanhar propostas ativas, aprovadas, recusadas e executadas. Fornece interface de votação direta (Sim/Desfazer) com progresso de quórum atualizado on-chain de forma transparente. Um formulário simplificado em modal permite submeter novas propostas financeiras de compra direta de estoque, frete ou creators diretamente via PDA.
+
+<div align="center">
+<p>Figura 3 – Interface em alta fidelidade da área de Governança Coletiva da Guild.</p>
+
+<img src="./assets/painel_governanca.png" alt="Painel de Governança Coletiva da Guild" width="100%">
+
+<p>Fonte: Próprios autores (2026).</p>
+</div>
+
 
 # 4. Arquitetura Técnica
 
