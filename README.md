@@ -52,6 +52,8 @@ Para uma compreensão aprofundada das diretrizes estratégicas, modelagem de neg
 
 A documentação detalha a viabilidade da DAO, mitigação de riscos de governança para sellers de marketplace e a fundamentação da infraestrutura on-chain do projeto.
 
+---
+
 ## 📁 Estrutura do Repositório
 
 A organização do código reflete a separação de responsabilidades entre governança on-chain, interfaces interativas e documentação executiva estratégica:
