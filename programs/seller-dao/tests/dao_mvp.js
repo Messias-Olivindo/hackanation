@@ -10,12 +10,7 @@ const {
 } = require("@solana/spl-token");
 const { assert } = require("chai");
 
-const fs = require("fs");
-const os = require("os");
-const path = require("path");
-const { Transaction, sendAndConfirmTransaction } = require("@solana/web3.js");
-
-const DAO_SEED = Buffer.from("dao_v2");
+const DAO_SEED = Buffer.from("dao");
 const TREASURY_SEED = Buffer.from("treasury");
 const MEMBER_SEED = Buffer.from("member");
 const PROPOSAL_SEED = Buffer.from("proposal");
@@ -27,8 +22,7 @@ async function warpForwardSlots(connection, slots) {
 }
 
 describe("seller-dao mvp", () => {
-  const envProvider = anchor.AnchorProvider.env();
-  const connection = envProvider.connection;
+  const connection = new anchor.web3.Connection("http://127.0.0.1:8899", "confirmed");
   const user = Keypair.generate();
   const wallet = new anchor.Wallet(user);
   const provider = new anchor.AnchorProvider(connection, wallet, {
@@ -37,30 +31,9 @@ describe("seller-dao mvp", () => {
   anchor.setProvider(provider);
 
   const idl = require("../target/idl/seller_dao.json");
-  const programId = anchor.workspace.SellerDao ? anchor.workspace.SellerDao.programId : new PublicKey("FPezMd8XbqDEYXsDgqRW7bpGQ6HDdnjnzMbKpNMjcPkL");
-  console.log("--- TEST CONFIGURATION ---");
-  console.log("Connection RPC URL:", connection._rpcEndpoint);
-  console.log("Workspace SellerDao exists:", !!anchor.workspace.SellerDao);
-  if (anchor.workspace.SellerDao) {
-    console.log("Workspace Program ID:", anchor.workspace.SellerDao.programId.toBase58());
-  }
-  console.log("Resolved Program ID in JS:", programId.toBase58());
-  console.log("--------------------------");
+  const programId = new PublicKey("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
   const program = new anchor.Program(idl, programId, provider);
   const recipient = Keypair.generate();
-
-  // Load or generate a persistent mint keypair to make tests re-runnable on Devnet
-  let mintKeypair;
-  const mintPath = path.join(__dirname, "mint_persistent.json");
-  try {
-    const mintSecret = JSON.parse(fs.readFileSync(mintPath, "utf-8"));
-    mintKeypair = Keypair.fromSecretKey(Uint8Array.from(mintSecret));
-    console.log("Loaded persistent mint from file:", mintKeypair.publicKey.toBase58());
-  } catch (e) {
-    mintKeypair = Keypair.generate();
-    fs.writeFileSync(mintPath, JSON.stringify(Array.from(mintKeypair.secretKey)));
-    console.log("Generated and saved new persistent mint:", mintKeypair.publicKey.toBase58());
-  }
 
   let mint;
   let userTokenAccount;
@@ -72,44 +45,11 @@ describe("seller-dao mvp", () => {
   let altRecipientTokenAccount;
 
   before(async () => {
-    let activeWalletKeypair;
-    try {
-      const walletPath = process.env.ANCHOR_WALLET || path.join(os.homedir(), ".config/solana/id.json");
-      console.log("Loading active wallet from:", walletPath);
-      const walletSecret = JSON.parse(fs.readFileSync(walletPath, "utf-8"));
-      activeWalletKeypair = Keypair.fromSecretKey(Uint8Array.from(walletSecret));
-    } catch (e) {
-      console.log("Failed to load active wallet keypair, trying faucet standard airdrop:", e.message);
-    }
-
-    if (activeWalletKeypair) {
-      const activeBalance = await connection.getBalance(activeWalletKeypair.publicKey);
-      console.log(`Active CLI wallet balance: ${activeBalance / anchor.web3.LAMPORTS_PER_SOL} SOL`);
-      
-      if (activeBalance >= 0.2 * anchor.web3.LAMPORTS_PER_SOL) {
-        console.log("Funding test user from active CLI wallet...");
-        const transferTx = new Transaction().add(
-          SystemProgram.transfer({
-            fromPubkey: activeWalletKeypair.publicKey,
-            toPubkey: user.publicKey,
-            lamports: 0.15 * anchor.web3.LAMPORTS_PER_SOL,
-          })
-        );
-        const signature = await sendAndConfirmTransaction(connection, transferTx, [activeWalletKeypair]);
-        console.log("Funded test user successfully. Tx:", signature);
-      } else {
-        console.log("Active CLI wallet balance is too low, attempting airdrop...");
-        const signature = await connection.requestAirdrop(user.publicKey, 1_000_000_000);
-        await connection.confirmTransaction(signature, "confirmed");
-      }
-    } else {
-      console.log("No active CLI wallet found, attempting airdrop...");
-      const signature = await connection.requestAirdrop(user.publicKey, 1_000_000_000);
-      await connection.confirmTransaction(signature, "confirmed");
-    }
-
-    const testUserBalance = await connection.getBalance(user.publicKey);
-    console.log(`Test user funded. Balance: ${testUserBalance / anchor.web3.LAMPORTS_PER_SOL} SOL`);
+    const signature = await provider.connection.requestAirdrop(
+      user.publicKey,
+      2_000_000_000
+    );
+    await provider.connection.confirmTransaction(signature, "confirmed");
   });
 
   it("join_dao initializes DAO and member", async () => {
@@ -120,31 +60,13 @@ describe("seller-dao mvp", () => {
       program.programId
     );
 
-    // Get initial members count if DAO exists on-chain
-    let initialMembers = 0;
-    try {
-      const existingDao = await program.account.dao.fetch(daoPda);
-      initialMembers = existingDao.totalMembers.toNumber();
-      console.log("DAO already initialized on-chain. Initial members:", initialMembers);
-    } catch (e) {
-      console.log("DAO not initialized yet on-chain. Initial members: 0");
-    }
-
-    mint = mintKeypair.publicKey;
-    const mintAccountInfo = await provider.connection.getAccountInfo(mint);
-    if (mintAccountInfo) {
-      console.log("Persistent mint already exists on-chain:", mint.toBase58());
-    } else {
-      console.log("Persistent mint does not exist. Creating it:", mint.toBase58());
-      await createMint(
-        provider.connection,
-        user,
-        user.publicKey,
-        null,
-        6,
-        mintKeypair
-      );
-    }
+    mint = await createMint(
+      provider.connection,
+      user,
+      user.publicKey,
+      null,
+      6
+    );
 
     const userAta = await getOrCreateAssociatedTokenAccount(
       provider.connection,
@@ -169,8 +91,6 @@ describe("seller-dao mvp", () => {
       1_000_000
     );
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
     await program.methods
       .joinDao(new anchor.BN(100_000))
       .accounts({
@@ -191,7 +111,7 @@ describe("seller-dao mvp", () => {
     const daoAccount = await program.account.dao.fetch(daoPda);
     const memberAccount = await program.account.member.fetch(memberPda);
 
-    assert.equal(daoAccount.totalMembers.toNumber(), initialMembers + 1);
+    assert.equal(daoAccount.totalMembers.toNumber(), 1);
     assert.equal(memberAccount.user.toBase58(), user.publicKey.toBase58());
   });
 
@@ -232,28 +152,12 @@ describe("seller-dao mvp", () => {
       })
       .rpc();
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
     const [voteRecordPda] = PublicKey.findProgramAddressSync(
       [VOTE_SEED, proposalPda.toBuffer(), memberPda.toBuffer()],
       program.programId
     );
 
-    console.log("--- DEBUGGING VOTE ---");
-    console.log("proposalPda:", proposalPda.toBase58());
-    try {
-      const accountInfo = await program.provider.connection.getAccountInfo(proposalPda);
-      console.log("Proposal account owner:", accountInfo.owner.toBase58());
-      const proposalAcc = await program.account.proposal.fetch(proposalPda);
-      console.log("Fetched proposal exists! Proposer:", proposalAcc.proposer.toBase58());
-      console.log("Proposal ID:", proposalAcc.proposalId.toString());
-      console.log("Description:", proposalAcc.description);
-    } catch (e) {
-      console.log("Failed to fetch proposal account:", e.message);
-    }
-    console.log("----------------------");
-
-    const ix = await program.methods
+    await program.methods
       .vote(proposalId, true)
       .accounts({
         member: memberPda,
@@ -263,36 +167,10 @@ describe("seller-dao mvp", () => {
         user: user.publicKey,
         systemProgram: SystemProgram.programId,
       })
-      .instruction();
-    console.log("--- VOTE IX ACCOUNTS ---");
-    ix.keys.forEach((k, i) => console.log(`${i}: pubkey=${k.pubkey.toBase58()} isSigner=${k.isSigner} isWritable=${k.isWritable}`));
-    console.log("------------------------");
+      .rpc();
 
-    try {
-      await program.methods
-        .vote(proposalId, true)
-        .accounts({
-          member: memberPda,
-          proposal: proposalPda,
-          dao: daoPda,
-          voteRecord: voteRecordPda,
-          user: user.publicKey,
-          systemProgram: SystemProgram.programId,
-        })
-        .rpc();
-    } catch (err) {
-      console.log("--- VOTE TRANSACTION LOGS ---");
-      if (err.logs) {
-        console.log(err.logs.join("\n"));
-      } else {
-        console.log(err);
-      }
-      console.log("-----------------------------");
-      throw err;
-    }
-
-    // Wait for the 60 seconds voting period to end
-    await new Promise((resolve) => setTimeout(resolve, 61000));
+    // Wait for the 5 seconds voting period to end
+    await new Promise((resolve) => setTimeout(resolve, 6000));
 
     await program.methods
       .execute(proposalId)
@@ -398,37 +276,24 @@ describe("seller-dao mvp", () => {
       })
       .rpc();
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
     const [voteRecordPda] = PublicKey.findProgramAddressSync(
       [VOTE_SEED, proposalPda.toBuffer(), memberPda.toBuffer()],
       program.programId
     );
 
-    try {
-      await program.methods
-        .vote(proposalId, true)
-        .accounts({
-          member: memberPda,
-          proposal: proposalPda,
-          dao: daoPda,
-          voteRecord: voteRecordPda,
-          user: user.publicKey,
-          systemProgram: SystemProgram.programId,
-        })
-        .rpc();
-    } catch (err) {
-      console.log("--- TEST 5 VOTE TRANSACTION LOGS ---");
-      if (err.logs) {
-        console.log(err.logs.join("\n"));
-      } else {
-        console.log(err);
-      }
-      console.log("-------------------------------------");
-      throw err;
-    }
+    await program.methods
+      .vote(proposalId, true)
+      .accounts({
+        member: memberPda,
+        proposal: proposalPda,
+        dao: daoPda,
+        voteRecord: voteRecordPda,
+        user: user.publicKey,
+        systemProgram: SystemProgram.programId,
+      })
+      .rpc();
 
-    await new Promise((resolve) => setTimeout(resolve, 61000));
+    await new Promise((resolve) => setTimeout(resolve, 6000));
 
     try {
       await program.methods
